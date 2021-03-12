@@ -12,39 +12,80 @@ o El Destructor tiene que liberar toda la memoria que ocupe el vector
 */
 
 TVectorCalendario::TVectorCalendario(){
+    this->c = NULL;
     this->tamano = 0;
 }
 
 TVectorCalendario::TVectorCalendario(int tam){
-
+    if(tam < 0){
+        TVectorCalendario();
+    }
+    else{
+        this->tamano = tam;
+        //this->c =             //no tengo ni idea reguntar como se hace
+    }
 }
 
-TVectorCalendario::TVectorCalendario(TVectorCalendario& tvector){
-
+TVectorCalendario::TVectorCalendario(const TVectorCalendario& tvector){
+    this->tamano = tvector.tamano;
+    this-> c = new TCalendario[tvector.tamano];
+    //carencias
 }
 
 TVectorCalendario::~TVectorCalendario(){
-
+    this->tamano = 0;
+    delete[] c;                 //carencias aqui, no entiendo muy bien lo de asingar vector a un vector no vacio
+    this->c = NULL;
 }
 
 TVectorCalendario& TVectorCalendario::operator=(TVectorCalendario& tvector){
-
+    if(this != tvector){            //me falla la desiugaldad
+        (*this).~TVectorCalendario();
+        this->tamano = tvector.tamano;
+        this->c = new TCalendario[tvector.tamano];
+        for(int i = 0; i < tvector.tamano; i++){
+            this->c[i] = tvector.c[i+1];        //porque empieza en 1 no desde 0
+        }
+        return *this;
+    }
+    else{
+        return *this;
+    }
 }
 
 bool TVectorCalendario::operator==(TVectorCalendario& tvector){
-
+    bool equal = false;
+    if(this->tamano == tvector.tamano){
+        for(int i = 0; i < tvector.tamano; i++){
+            if(tvector.c[i] != this->c[i]){
+                break;
+            }
+        }
+        equal = true;
+    }
+    return equal;
 }
 
 bool TVectorCalendario::operator!=(TVectorCalendario& tvector){
     return !(*this==tvector);
 }
 
-TCalendario& TVectorCalendario::operator[](int num){
-
+TCalendario& TVectorCalendario::operator[](int num){    //parte izquierda
+    if(num >= 1 && num <= this->tamano){
+        return this->c[num];
+    }
+    else{
+        return this->error;
+    }
 }
 
-TCalendario TVectorCalendario::operator[](int num)const{
-
+TCalendario TVectorCalendario::operator[](int num)const{    //parte derecha
+    if(num >= 1 && num <= this->tamano){
+        return this->c[num];
+    }
+    else{
+        return this->error;
+    }
 }
 
 int TVectorCalendario::Tamano(){
@@ -52,11 +93,24 @@ int TVectorCalendario::Tamano(){
 }
 
 int TVectorCalendario::Ocupadas(){
-
+    int cont = 0;
+    for(int i = 0; i < this->tamano; i++){
+        if(this->c[i] != error){
+            cont++;
+        }
+    }
+    return cont;
 }
 
 bool TVectorCalendario::ExisteCal(TCalendario& calen){
-
+    //nos pasan un calendario y tenemos que comprobar si existe en la lista
+    bool existe = false;
+    for(int i = 0; i < this->tamano || existe = false; i++){
+        if(this->c[i] == calen){
+            existe = true;
+        }
+    }
+    return existe;
 }
 
 void TVectorCalendario::MostrarMensajes(int dia, int fecha, int anyo){

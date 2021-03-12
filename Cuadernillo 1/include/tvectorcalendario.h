@@ -13,7 +13,7 @@ class TVectorCalendario{
     public:
         TVectorCalendario();                                //constructor por defecto
         TVectorCalendario(int);                             //consturctor a partir de un tamaño
-        TVectorCalendario(TVectorCalendario&);              //constructor de copia
+        TVectorCalendario(const TVectorCalendario&);              //constructor de copia
         ~TVectorCalendario();                               //destructor
         TVectorCalendario& operator=(TVectorCalendario&);   //sobrecarga del operador asignacion
         bool operator==(TVectorCalendario&);                //sobrecarga del operador igualdad
