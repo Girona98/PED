@@ -25,6 +25,5 @@ class TVectorCalendario{
         bool ExisteCal(TCalendario&);                       //devuelve true si existe el calendario en el vector
         void MostrarMensajes(int,int,int);                  //muestra por pantalla mensajes de tcalendario en el vector, fechecha igual o posterior a la pasada
         bool Redimensionar(int);                            //redimensiona el vector de tcalendario
-
 };
 #endif
