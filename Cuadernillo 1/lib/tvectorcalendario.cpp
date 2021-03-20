@@ -41,15 +41,38 @@ TVectorCalendario::TVectorCalendario(const TVectorCalendario& tvector){
 }
 
 TVectorCalendario::~TVectorCalendario(){
-
+    this->tamano = 0;
+    delete[] c;
+    this->c = NULL;
 }
 
 TVectorCalendario& TVectorCalendario::operator=(TVectorCalendario& tvector){
+    if(*this != tvector){
+        if(tvector.c == NULL){
+            this->tamano = 0;
+            this->c = NULL;
+        }
+        else{
+            this->tamano = tvector.tamano;
+            this->c = new TCalendario[tvector.tamano];
+            for (int i = 0; i < tvector.tamano; i++){
+                this->c[i] = tvector.c[i + 1]; //en tvector empiezan en 1 no en 0
+            }
+        }
+    }
 
 }
 
 bool TVectorCalendario::operator==(TVectorCalendario& tvector){
-
+    bool equal = true;
+    if(this->tamano == tvector.tamano){
+        for(int i = 0; i < tvector.tamano && equal == true; i++){
+            if(this->c[i] != tvector.c[i + 1]){
+                equal = false;
+            }
+        }
+    }   
+    return equal;
 }
 
 bool TVectorCalendario::operator!=(TVectorCalendario& tvector){
@@ -57,11 +80,21 @@ bool TVectorCalendario::operator!=(TVectorCalendario& tvector){
 }
 
 TCalendario& TVectorCalendario::operator[](int num){
-
+    if(num >= 1 && num <= this->tamano){
+        return this->c[num];
+    }
+    else{
+        return error;
+    }
 }
 
 TCalendario TVectorCalendario::operator[](int num)const{
-
+    if(num >= 1 && num <= this->tamano){
+        return this->c[num];
+    }
+    else{
+        return error;
+    }
 }
 
 int TVectorCalendario::Tamano(){
@@ -69,15 +102,32 @@ int TVectorCalendario::Tamano(){
 }
 
 int TVectorCalendario::Ocupadas(){
-
+    int ocupadas = 0;
+    for (int i = 0; i < this->tamano; i++){
+        if(this->c[i] != this->error){
+            ocupadas++;
+        }
+    }
+    return ocupadas;
 }
 
 bool TVectorCalendario::ExisteCal(TCalendario& calen){
-
+    bool existe = false;
+    for (int i = 0; i < this->tamano && existe == false; i++){
+        if(this->c[i] == calen){
+            existe = true;
+        }
+    }
+    return existe;
 }
 
-void TVectorCalendario::MostrarMensajes(int dia, int fecha, int anyo){
-
+void TVectorCalendario::MostrarMensajes(int dia, int mes, int anyo){
+    TCalendario *fecha = new TCalendario(dia, mes, anyo, NULL);
+    for(int i = 1; i < this->tamano; i++){
+        if(this->c[i] > *fecha || this->c[i] == *fecha){
+            
+        }
+    }
 }
 
 bool TVectorCalendario::Redimensionar(int tam){
@@ -91,12 +141,33 @@ bool TVectorCalendario::Redimensionar(int tam){
     else if(tam > this->tamano){
         //hay que copiar los
         //componentes del vector en el vector nuevo, que pasará a tener el tamaño que indica el entero.
-        //Las nuevas posiciones serán “vacías”, es decir, objetos TCalendario "vacío". 
+        //Las nuevas posiciones serán “vacías”, es decir, objetos TCalendario "vacío".
+        TCalendario *vector = new TCalendario[tam];
+        for (int i = 0; i < this->tamano; i++){
+            vector[i] = this->c[i];
+        }
+        this->tamano = tam;
+        
+        for (int j = 0; j < tam; j++){
+            this->c[j] = vector[j];
+        }
+        
         red = true;
     }
     else if(tam < this->tamano){
         //se deben eliminar los
         //TCalendario que sobren por la derecha, dejando el nuevo tamaño igual al valor del entero.
+        TCalendario *vector = new TCalendario[tam];
+        for(int i = 0; i < tam; i++){
+            vector[i] = this->c[i];
+        }
+
+        this->tamano = tam;
+        for (int j = 0; j < tam; j++){
+            this->c[j] = vector[j];
+        }
+
+        
         red = true;
     }
     return red;
