@@ -1,16 +1,5 @@
 #include "../include/tvectorcalendario.h"
 
-/*
-o El vector NO tiene por qué estar ordenado.
-o El vector puede contener elementos repetidos. Incluso de los TCalendario considerados "vacíos"
-(es decir, con el valor directamente generado por el Constructor por defecto de TCalendario).
-o El Constructor por defecto crea un vector de dimensión 0 (puntero interno a NULL, no se reserva
-memoria).
-o En el Constructor a partir de un tamaño, si el tamaño es menor que 0, se creará un vector de
-dimensión 0 (como el constructor por defecto).
-o El Destructor tiene que liberar toda la memoria que ocupe el vector
-*/
-
 TVectorCalendario::TVectorCalendario(){
     this->tamano = 0;
     this->c = NULL;
@@ -18,7 +7,9 @@ TVectorCalendario::TVectorCalendario(){
 
 TVectorCalendario::TVectorCalendario(int tam){
     if(tam <= 0){
-        TVectorCalendario();
+        //TVectorCalendario();
+        this->tamano = 0;
+        this->c = NULL;
     }
     else{
         this->tamano = tam;
@@ -46,8 +37,9 @@ TVectorCalendario::~TVectorCalendario(){
     this->c = NULL;
 }
 
-TVectorCalendario& TVectorCalendario::operator=(TVectorCalendario& tvector){
-    if(*this != tvector){
+TVectorCalendario& TVectorCalendario::operator=(const TVectorCalendario& tvector){
+    if(this != &tvector){
+        (*this).~TVectorCalendario();
         if(tvector.c == NULL){
             this->tamano = 0;
             this->c = NULL;
@@ -55,13 +47,14 @@ TVectorCalendario& TVectorCalendario::operator=(TVectorCalendario& tvector){
         else{
             this->tamano = tvector.tamano;
             this->c = new TCalendario[tvector.tamano];
-            for (int i = 0; i < tvector.tamano; i++){
-                this->c[i] = tvector.c[i + 1]; //en tvector empiezan en 1 no en 0
+            for(int i = 0; i < tvector.tamano; i++){
+                this->c[i] = tvector.c[i];
             }
         }
     }
-
+    return *this;
 }
+
 
 bool TVectorCalendario::operator==(TVectorCalendario& tvector){
     bool equal = true;
@@ -81,7 +74,7 @@ bool TVectorCalendario::operator!=(TVectorCalendario& tvector){
 
 TCalendario& TVectorCalendario::operator[](int num){
     if(num >= 1 && num <= this->tamano){
-        return this->c[num];
+        return this->c[num - 1];
     }
     else{
         return error;
@@ -90,7 +83,7 @@ TCalendario& TVectorCalendario::operator[](int num){
 
 TCalendario TVectorCalendario::operator[](int num)const{
     if(num >= 1 && num <= this->tamano){
-        return this->c[num];
+        return this->c[num - 1];
     }
     else{
         return error;
@@ -123,7 +116,7 @@ bool TVectorCalendario::ExisteCal(TCalendario& calen){
 
 void TVectorCalendario::MostrarMensajes(int dia, int mes, int anyo){
     TCalendario *fecha = new TCalendario(dia, mes, anyo, NULL);
-    cout<<"[";
+    cout<<"[";  
     for(int i = 1; i < this->tamano; i++){
         if(this->c[i] > *fecha || this->c[i] == *fecha){
             cout<<this->c[i];
@@ -151,11 +144,7 @@ bool TVectorCalendario::Redimensionar(int tam){
             vector[i] = this->c[i];
         }
         this->tamano = tam;
-        
-        for (int j = 0; j < tam; j++){
-            this->c[j] = vector[j];
-        }
-        
+        this->c = vector;
         red = true;
     }
     else if(tam < this->tamano){
@@ -167,22 +156,31 @@ bool TVectorCalendario::Redimensionar(int tam){
         }
 
         this->tamano = tam;
-        for (int j = 0; j < tam; j++){
-            this->c[j] = vector[j];
-        }
-
-        
+        this->c = vector;
         red = true;
     }
     return red;
 }
 
 ostream& operator<<(ostream& salida, TVectorCalendario& tvector){
-    salida<<"[ ";
-    for (int i = 0; i < tvector.tamano; i++){
-        salida<<"("<<i+1<<") ";
-        salida<<tvector[i]; //esto llama al operator<< de tcalendario?
-        salida<<", ";
+    salida<<"[";
+    if(tvector.tamano == 0){
+        salida<<"]";
     }
-    salida<<"]";
+    else{
+        for (int i = 1; i <= tvector.tamano; i++){ //porque el vector empieza en 1
+            salida<<"("<<i<<") ";
+            salida<<tvector[i]; //esto llama al operator<< de tcalendario?
+            if(i==tvector.tamano){
+                salida<<"";
+            }
+            else{
+                salida<<", ";
+            }
+            
+        }
+        salida<<"]";
+    }
+
+    return salida;
 }

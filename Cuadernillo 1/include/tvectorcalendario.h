@@ -1,7 +1,7 @@
 #ifndef __tvector__
 #define __tvector__
 #include <iostream>
-#include <tcalendario.h>
+#include "tcalendario.h"
 using namespace std;
 
 class TVectorCalendario{
@@ -15,7 +15,7 @@ class TVectorCalendario{
         TVectorCalendario(int);                             //consturctor a partir de un tamaño
         TVectorCalendario(const TVectorCalendario&);              //constructor de copia
         ~TVectorCalendario();                               //destructor
-        TVectorCalendario& operator=(TVectorCalendario&);   //sobrecarga del operador asignacion
+        TVectorCalendario& operator=(const TVectorCalendario&);   //sobrecarga del operador asignacion
         bool operator==(TVectorCalendario&);                //sobrecarga del operador igualdad
         bool operator!=(TVectorCalendario&);                //sobrecarga del operador desigualdad
         TCalendario& operator[](int);                       //sobrecarga del operador corchete(parte izquierda)
