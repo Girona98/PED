@@ -114,19 +114,67 @@ bool TVectorCalendario::ExisteCal(TCalendario& calen){
     return existe;
 }
 
-//posible fallo de aqui es que no compruebo que una fecha es valida o no
-void TVectorCalendario::MostrarMensajes(int dia, int mes, int anyo){
-    TCalendario *fecha = new TCalendario(dia, mes, anyo, NULL);
-    cout<<"[";  
-    for(int i = 1; i < this->tamano; i++){
-        if(this->c[i] > *fecha || this->c[i] == *fecha){
-            cout<<this->c[i];
-            if(i >= 1 && i < this->tamano - 1){
-                cout<<", ";
+bool TVectorCalendario::isBisiesto(int anyo){
+    bool bisiesto = false;
+    if(anyo % 4 == 0 && anyo % 100 != 0 || anyo % 400 == 0){
+        bisiesto = true;
+    }
+    return bisiesto;
+}
+
+
+bool TVectorCalendario::checkFecha(int dia, int mes, int anyo){
+    bool correcto = false;
+    if(anyo >= 1900){
+        if(mes >= 1 && mes <= 12){
+            if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12){
+                if(dia >= 1 && dia <= 31){
+                    correcto = true;
+                }
+            }
+            else{
+                if(mes == 2){       
+                    if( isBisiesto(anyo) == true){
+                        if( dia >= 1 && dia <=29){
+                            correcto = true;
+                        }
+                    }
+                    else{
+                        if(dia >= 1 && dia <= 28){
+                            correcto = true;
+                        }
+                    }
+                }
+                else{
+                    if(dia >= 1 && dia <= 30){
+                        correcto = true;
+                    }
+                }
             }
         }
     }
-    cout<<"]";
+    return correcto;
+}
+
+//posible fallo de aqui es que no compruebo que una fecha es valida o no
+void TVectorCalendario::MostrarMensajes(int dia, int mes, int anyo){
+    if(checkFecha(dia, mes, anyo)){
+        TCalendario *fecha = new TCalendario(dia, mes, anyo, NULL);
+        cout<<"[";  
+        for(int i = 0 ; i < this->tamano; i++){
+            if(this->c[i] > *fecha || this->c[i] == *fecha){
+                cout<<this->c[i];
+                if(i >= 0 && i < this->tamano - 1){
+                    cout<<", ";
+                }
+            }
+        }
+        cout<<"]";
+    }
+    else{
+        cout<<"[]";
+    }
+
 }
 
 bool TVectorCalendario::Redimensionar(int tam){

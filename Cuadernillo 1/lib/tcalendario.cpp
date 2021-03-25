@@ -415,20 +415,30 @@ bool TCalendario::operator>(const TCalendario& calen){
         mayor = true;
     }
     else if(this->anyo == calen.anyo){
-        if(this->mensaje == NULL && calen.mensaje == NULL){
-            mayor = false;
-        }
-        else if(this->mensaje != NULL && calen.mensaje == NULL){
+        if(this->mes > calen.mes){
             mayor = true;
         }
-        else if(this->mensaje == NULL && calen.mensaje != NULL){
-            mayor = false;
-        }
-        else if(strlen(this->mensaje) > strlen(calen.mensaje)){
-            mayor = true;
-        }
-        else if(strlen(this->mensaje) == strlen(calen.mensaje)){
-            mayor = false;
+        else if(this->mes == calen.mes){
+            if(this->dia > calen.dia){
+                mayor = true;
+            }
+            else if(this->dia == calen.dia){
+                if(this->mensaje == NULL && calen.mensaje == NULL){
+                    mayor = false;
+                }
+                else if(this->mensaje != NULL && calen.mensaje == NULL){
+                    mayor = true;
+                }
+                else if(this->mensaje == NULL && calen.mensaje != NULL){
+                    mayor = false;
+                }
+                else if(strlen(this->mensaje) > strlen(calen.mensaje)){
+                    mayor = true;
+                }
+                else if(strlen(this->mensaje) == strlen(calen.mensaje)){
+                    mayor = false;
+                }
+            }
         }
     }
     return mayor;

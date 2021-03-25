@@ -22,11 +22,15 @@ main(void)
    //cout << a[1] << endl;
    //cout << a[0] << endl;
    //Pasamos fecha incorrecta
-   a.MostrarMensajes(32,12, 2000);
+   a.MostrarMensajes(32,12,2000);
    cout << endl;
 
    //Pasamos fecha correcta
    a.MostrarMensajes(1,1,2006);
+   cout << endl;
+
+   //Pasamos fecha incorrecta
+   a.MostrarMensajes(30,17,2000);
    cout << endl;
 
    //Pasamos fecha correcta

@@ -10,6 +10,8 @@ class TVectorCalendario{
         TCalendario *c;
         int tamano;
         TCalendario error;
+        bool checkFecha(int, int, int);                     //funcion auxiliar para comprobar la fecha
+        bool isBisiesto(int);                               //funcion auxiliar para comprobar si el año es bisiesto
     public:
         TVectorCalendario();                                //constructor por defecto
         TVectorCalendario(int);                             //consturctor a partir de un tamaño
