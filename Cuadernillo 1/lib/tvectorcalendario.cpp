@@ -114,17 +114,19 @@ bool TVectorCalendario::ExisteCal(TCalendario& calen){
     return existe;
 }
 
+//posible fallo de aqui es que no compruebo que una fecha es valida o no
 void TVectorCalendario::MostrarMensajes(int dia, int mes, int anyo){
     TCalendario *fecha = new TCalendario(dia, mes, anyo, NULL);
     cout<<"[";  
     for(int i = 1; i < this->tamano; i++){
         if(this->c[i] > *fecha || this->c[i] == *fecha){
             cout<<this->c[i];
-            if(i >= 1 && i < this->tamano){
+            if(i >= 1 && i < this->tamano - 1){
                 cout<<", ";
             }
         }
     }
+    cout<<"]";
 }
 
 bool TVectorCalendario::Redimensionar(int tam){
