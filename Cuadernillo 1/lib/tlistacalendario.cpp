@@ -6,19 +6,42 @@
     TNodoCalendario *siguiente
 */
 TNodoCalendario::TNodoCalendario(){
-
+    this->siguiente = NULL;
 }
 
 TNodoCalendario::TNodoCalendario(TNodoCalendario &tnodo){
+    if(&tnodo.c == NULL){
+        this->c = NULL;
+    }
+    else{
+        this->c = tnodo.c;
+    }
 
+    if(tnodo.siguiente == NULL){
+        this->siguiente = NULL;
+    }
+    else{
+        this->siguiente = tnodo.siguiente;
+    }
 }
 
 TNodoCalendario::~TNodoCalendario(){
-
+    this->c.~TCalendario();
+    this->siguiente = NULL;
 }
 
 TNodoCalendario& TNodoCalendario::operator=(TNodoCalendario &tnodo){
-
+    if(this != &tnodo){
+        this->~TNodoCalendario();
+        this->c = tnodo.c;
+        if(tnodo.siguiente == NULL){
+            this->siguiente = NULL;
+        }
+        else{
+            this->siguiente = tnodo.siguiente;   
+        }
+    }
+    return *this;
 }
 
 /*
@@ -27,19 +50,32 @@ Metodos TListaPos
     TNodoCalendario *pos
 */
 TListaPos::TListaPos(){
-
+    this->pos = NULL;
 }
 
- TListaPos::TListaPos(TListaPos& tlista){
-
+TListaPos::TListaPos(TListaPos& tlista){
+    if(tlista.pos == NULL){
+        this->pos = NULL;
+    }
+    else{
+        this->pos = tlista.pos;
+    }
 }
 
 TListaPos::~TListaPos(){
-
+    this->pos = NULL;
 }
 
-TListaPos& TListaPos::operator=(TListaPos&){
-    
+TListaPos& TListaPos::operator=(TListaPos &tlista){
+    if(this != &tlista){
+        if(tlista.pos != NULL){
+            this->pos = tlista.pos;
+        }
+        else{
+            this->pos = NULL;
+        }
+    }
+    return *this;
 }
 
 bool TListaPos::operator==(TListaPos& tlista){
@@ -47,14 +83,18 @@ bool TListaPos::operator==(TListaPos& tlista){
 }
 
 bool TListaPos::operator!=(TListaPos& tlista){
-
+    return !(this == &tlista);
 }
 
 TListaPos TListaPos::Siguiente(){
-
+    return *this->pos->siguiente;
 }
 bool TListaPos::EsVacia(){
-
+    bool vacia = false;
+    if(this->pos == NULL){
+        bool vacia = true;
+    }
+    return vacia;
 }
 
 /*Metodos TListaCalendario

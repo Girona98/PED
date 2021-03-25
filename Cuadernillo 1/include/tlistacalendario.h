@@ -37,7 +37,7 @@ class TListaCalendario{
         TNodoCalendario *primero;
     public:
         TListaCalendario(); //constructor por defecto
-        TListaCalendario(TListaCalendario&); //constructor de copia
+        TListaCalendario(TListalendario&); //constructor de copia
         ~TListaCalendario(); //destructor
         TListaCalendario& operator=(TListaCalendario&); //sobrecarga del operador asingacion
         bool operator==(TListaCalendario&); //sobrecarga del operador igualdad
