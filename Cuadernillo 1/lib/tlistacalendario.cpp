@@ -79,7 +79,11 @@ TListaPos& TListaPos::operator=(TListaPos &tlista){
 }
 
 bool TListaPos::operator==(TListaPos& tlista){
-    
+    bool igual = false;
+    if(this->pos == tlista.pos){
+        igual = true;
+    }
+    return igual;0
 }
 
 bool TListaPos::operator!=(TListaPos& tlista){
@@ -87,6 +91,8 @@ bool TListaPos::operator!=(TListaPos& tlista){
 }
 
 TListaPos TListaPos::Siguiente(){
+    //En Siguiente(): si la posición actual es la última de la lista, se tiene que devolver un objetoTListaPosvacío
+    //carencias
     return *this->pos->siguiente;
 }
 bool TListaPos::EsVacia(){
@@ -99,27 +105,29 @@ bool TListaPos::EsVacia(){
 
 /*Metodos TListaCalendario
     ATRIBUTOS
-    TNodoCalendario *primero
+    TNodoCalendario *primero        //se interpreta como lista?¿?¿
 */
 
 TListaCalendario::TListaCalendario(){
+    this->primero = NULL;
+}
+
+TListaCalendario::TListaCalendario(TListaCalendario &tlista){
     
 }
 
-TListaCalendario::TListaCalendario(TListaCalendario& tlista){
-
-}
-
 TListaCalendario::~TListaCalendario(){
-
+    this->primero->~TNodoCalendario();  //veo carencias
 }
 
-TListaCalendario& TListaCalendario::operator=(TListaCalendario&){
+TListaCalendario& TListaCalendario::operator=(TListaCalendario &tlista){
+    if(this != &tlista){
 
+    }
 }
 
 bool TListaCalendario::operator==(TListaCalendario& tlista){
-
+    
 }
 
 TListaCalendario TListaCalendario::operator+(TListaCalendario& tlista){
@@ -130,11 +138,11 @@ TListaCalendario TListaCalendario::operator-(TListaCalendario& tlista){
 
 }
 
-bool TListaCalendario::Insertar(TCalendario & tcalen){
+bool TListaCalendario::Insertar(TCalendario &tcalen){
 
 }
 
-bool TListaCalendario::Borrar(TCalendario & tcalen){
+bool TListaCalendario::Borrar(TCalendario &tcalen){
 
 }
 
@@ -147,11 +155,22 @@ bool TListaCalendario::Borrar(int dia, int mes, int anyo){
 }
 
 bool TListaCalendario::EsVacia(){
-
+    bool vacio = false;
+    if(this->primero == NULL){
+        vacio = true;
+    }
+    return vacio;
 }
 
 TCalendario TListaCalendario::Obtener(TListaPos &tlista){
-
+    TListaPos auxiliar(tlista);
+    if(tlista.EsVacia()){
+        TCalendario vacio;
+        return vacio; 
+    }
+    else{
+        return auxiliar.pos->c;
+    }
 }
 
 bool TListaCalendario::Buscar(TCalendario &tcalen){
