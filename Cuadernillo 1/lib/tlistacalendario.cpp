@@ -83,7 +83,7 @@ bool TListaPos::operator==(TListaPos& tlista){
     if(this->pos == tlista.pos){
         igual = true;
     }
-    return igual;0
+    return igual;
 }
 
 bool TListaPos::operator!=(TListaPos& tlista){
@@ -169,7 +169,7 @@ TCalendario TListaCalendario::Obtener(TListaPos &tlista){
         return vacio; 
     }
     else{
-        return auxiliar.pos->c;
+        //return auxiliar.pos->c; esto es chuclado 
     }
 }
 

@@ -186,20 +186,19 @@ bool TVectorCalendario::Redimensionar(int tam){
         red = false;
     }
     else if(tam > this->tamano){
-        //hay que copiar los
-        //componentes del vector en el vector nuevo, que pasará a tener el tamaño que indica el entero.
-        //Las nuevas posiciones serán “vacías”, es decir, objetos TCalendario "vacío".
         TCalendario *vector = new TCalendario[tam];
         for (int i = 0; i < this->tamano; i++){
             vector[i] = this->c[i];
+        }
+        //esto esta bien?¿?¿ TENGO QUE COMPROBAR ESTO NO SE SI DEJARAN DE IR ALGUNAS PRUEBAS
+        for(int j = this->tamano; j < tam; j++){
+            vector[j] = error;
         }
         this->tamano = tam;
         this->c = vector;
         red = true;
     }
     else if(tam < this->tamano){
-        //se deben eliminar los
-        //TCalendario que sobren por la derecha, dejando el nuevo tamaño igual al valor del entero.
         TCalendario *vector = new TCalendario[tam];
         for(int i = 0; i < tam; i++){
             vector[i] = this->c[i];
