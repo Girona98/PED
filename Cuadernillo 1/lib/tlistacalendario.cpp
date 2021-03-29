@@ -2,27 +2,18 @@
 
 /*Metodos TNODOCALENDARIO
     ATRIBUTOS
-    TCalendario c;
+    TCalendario c;  uso de leewayering sobre la clase 
     TNodoCalendario *siguiente
 */
-TNodoCalendario::TNodoCalendario(){
+
+//llama por defecto al constructor de tcalendario para c
+TNodoCalendario::TNodoCalendario(){ 
     this->siguiente = NULL;
 }
 
-TNodoCalendario::TNodoCalendario(TNodoCalendario &tnodo){
-    if(&tnodo.c == NULL){
-        this->c = NULL;
-    }
-    else{
-        this->c = tnodo.c;
-    }
-
-    if(tnodo.siguiente == NULL){
-        this->siguiente = NULL;
-    }
-    else{
-        this->siguiente = tnodo.siguiente;
-    }
+//en este caso llamamos al constructor de copia de tcalendario con :c(tnodo.c)
+TNodoCalendario::TNodoCalendario(TNodoCalendario &tnodo):c(tnodo.c){
+    this->siguiente = NULL;
 }
 
 TNodoCalendario::~TNodoCalendario(){
@@ -69,6 +60,7 @@ TListaPos::~TListaPos(){
 TListaPos& TListaPos::operator=(TListaPos &tlista){
     if(this != &tlista){
         if(tlista.pos != NULL){
+            this->~TListaPos();
             this->pos = tlista.pos;
         }
         else{
@@ -78,8 +70,13 @@ TListaPos& TListaPos::operator=(TListaPos &tlista){
     return *this;
 }
 
+//son iguales si apuntan a la misma direccion de memoria 
 bool TListaPos::operator==(TListaPos& tlista){
-    
+    bool iguales = false;
+    if(this->pos == tlista.pos){
+        iguales = true;
+    }
+    return iguales;
 }
 
 bool TListaPos::operator!=(TListaPos& tlista){
@@ -87,7 +84,9 @@ bool TListaPos::operator!=(TListaPos& tlista){
 }
 
 TListaPos TListaPos::Siguiente(){
-    return *this->pos->siguiente;
+    TListaPos tlista;
+    tlista.pos = this->pos->siguiente;
+    return tlista;
 }
 bool TListaPos::EsVacia(){
     bool vacia = false;
@@ -103,11 +102,26 @@ bool TListaPos::EsVacia(){
 */
 
 TListaCalendario::TListaCalendario(){
-    
+    this->primero = NULL;   
 }
 
 TListaCalendario::TListaCalendario(TListaCalendario& tlista){
-
+    //para realizar una copia exacta primero checkeamos 
+    //que no sea una lista vacia
+    this->primero = tlista.primero;
+    if(tlista.primero == NULL){
+        this->primero = NULL;
+    }
+    else{
+        TNodoCalendario *nuevoprimero;
+        TNodoCalendario *nuevosiguiente;
+        //recorremos la lista 
+        nuevoprimero = primero; //asignamos el primero nodo
+        while(nuevoprimero != NULL){    
+            nuevosiguiente = nuevoprimero->siguiente; //guardamos el siguiente del primero
+            this->primero->c = tlista.primero->
+        }
+    }
 }
 
 TListaCalendario::~TListaCalendario(){

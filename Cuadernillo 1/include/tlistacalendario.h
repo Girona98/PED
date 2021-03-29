@@ -6,6 +6,8 @@
 using namespace std;
 
 class TNodoCalendario{
+    friend class TListaCalendario;
+    friend class TListaPos;
     
     private:
         TCalendario c; //uso de layering sobre la clase
@@ -18,6 +20,8 @@ class TNodoCalendario{
 };
 
 class TListaPos{
+    friend class TNodoCalendario;
+    friend class TListaCalendario;
     private:
         TNodoCalendario *pos;
     public:
@@ -37,7 +41,7 @@ class TListaCalendario{
         TNodoCalendario *primero;
     public:
         TListaCalendario(); //constructor por defecto
-        TListaCalendario(TListalendario&); //constructor de copia
+        TListaCalendario(TListaCalendario&); //constructor de copia
         ~TListaCalendario(); //destructor
         TListaCalendario& operator=(TListaCalendario&); //sobrecarga del operador asingacion
         bool operator==(TListaCalendario&); //sobrecarga del operador igualdad

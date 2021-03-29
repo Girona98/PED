@@ -86,7 +86,7 @@ TListaPos TListaPos::Siguiente(){
 	}*/
 	return lp;
 }
-
+	
 bool TListaPos::EsVacia(){
 	if(pos==NULL){
 		return true;
