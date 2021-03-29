@@ -88,6 +88,7 @@ TListaPos TListaPos::Siguiente(){
     tlista.pos = this->pos->siguiente;
     return tlista;
 }
+
 bool TListaPos::EsVacia(){
     bool vacia = false;
     if(this->pos == NULL){
@@ -98,7 +99,7 @@ bool TListaPos::EsVacia(){
 
 /*Metodos TListaCalendario
     ATRIBUTOS
-    TNodoCalendario *primero
+    TNodoCalendario *primero        //se interpreta como lista?¿?¿
 */
 
 TListaCalendario::TListaCalendario(){
@@ -122,18 +123,20 @@ TListaCalendario::TListaCalendario(TListaCalendario& tlista){
             this->primero->c = tlista.primero->
         }
     }
-}
+
 
 TListaCalendario::~TListaCalendario(){
-
+    this->primero->~TNodoCalendario();  //veo carencias
 }
 
-TListaCalendario& TListaCalendario::operator=(TListaCalendario&){
+TListaCalendario& TListaCalendario::operator=(TListaCalendario &tlista){
+    if(this != &tlista){
 
+    }
 }
 
 bool TListaCalendario::operator==(TListaCalendario& tlista){
-
+    
 }
 
 TListaCalendario TListaCalendario::operator+(TListaCalendario& tlista){
@@ -144,11 +147,11 @@ TListaCalendario TListaCalendario::operator-(TListaCalendario& tlista){
 
 }
 
-bool TListaCalendario::Insertar(TCalendario & tcalen){
+bool TListaCalendario::Insertar(TCalendario &tcalen){
 
 }
 
-bool TListaCalendario::Borrar(TCalendario & tcalen){
+bool TListaCalendario::Borrar(TCalendario &tcalen){
 
 }
 
@@ -161,11 +164,22 @@ bool TListaCalendario::Borrar(int dia, int mes, int anyo){
 }
 
 bool TListaCalendario::EsVacia(){
-
+    bool vacio = false;
+    if(this->primero == NULL){
+        vacio = true;
+    }
+    return vacio;
 }
 
 TCalendario TListaCalendario::Obtener(TListaPos &tlista){
-
+    TListaPos auxiliar(tlista);
+    if(tlista.EsVacia()){
+        TCalendario vacio;
+        return vacio; 
+    }
+    else{
+        //return auxiliar.pos->c; esto es chuclado 
+    }
 }
 
 bool TListaCalendario::Buscar(TCalendario &tcalen){
