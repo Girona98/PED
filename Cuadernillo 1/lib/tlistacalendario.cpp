@@ -185,8 +185,11 @@ TListaCalendario TListaCalendario::operator-(TListaCalendario& tlista){
     restalista += this;
 
     for(int i = 0; i < tlista.Longitud(); i++){
-        
+        restalista.Borrar(auxDer.pos->c);
+        auxDer = auxDer.Siguiente;
     }     
+
+    return restalista;
 }
 
 bool TListaCalendario::Insertar(TCalendario &tcalen){
@@ -221,8 +224,9 @@ bool TListaCalendario::Borrar(TListaPos &tlista){
     return this->Borrar(this->Obtener(tlista));
 }
 
-bool TListaCalendario::Borrar(int dia, int mes, int anyo){  //faltan cosas, carencias
-    bool borrable = false;
+//creo que hay carencias aqui
+bool TListaCalendario::Borrar(int dia, int mes, int anyo){  
+    bool borrable = false;                                     
     if(this->Primera().EsVacia()){
         borrable = false;
     }
@@ -233,6 +237,7 @@ bool TListaCalendario::Borrar(int dia, int mes, int anyo){  //faltan cosas, care
             for(int i = 0; i < this->Longitud() && menores == false; i++){
                 if(this->primero->c[i] < calen){
                     menores = true;
+                    this->Borrar(this->primero->c[i]);
                 }
             }
             if(menores == true){
