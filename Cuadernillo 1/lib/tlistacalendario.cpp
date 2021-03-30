@@ -163,11 +163,30 @@ bool TListaCalendario::operator==(TListaCalendario& tlista){
 }
 
 TListaCalendario TListaCalendario::operator+(TListaCalendario& tlista){
-
+    TListaCalendario sumalista;
+    TListaPos auxIzq = this->primero;
+    TListaPos auxDer = tlista.primero;
+    for(int i = 0; i < this->Longitud(); i++){
+        sumalista.Insertar(auxIzq.pos->c);   //insertamos el calendario en la lista
+        auxIzq = auxIzq.Siguiente();         //asignamos el nodo siguiente al auxiliar
+    }
+    for(int j = 0; j < tlista.Longitud(); i++){
+        sumalista.Insertar(auxDer.pos->c);
+        auxDer = auxDer.Siguiente();
+    }
+    return sumalista;
 }
 
 TListaCalendario TListaCalendario::operator-(TListaCalendario& tlista){
+    TListaCalendario restalista;
+    TListaPos auxIzq = this->primero;
+    TListaPos auxDer = tlista.primero;
 
+    restalista += this;
+
+    for(int i = 0; i < tlista.Longitud(); i++){
+        
+    }     
 }
 
 bool TListaCalendario::Insertar(TCalendario &tcalen){
@@ -175,20 +194,51 @@ bool TListaCalendario::Insertar(TCalendario &tcalen){
 }
 
 bool TListaCalendario::Borrar(TCalendario &tcalen){
-
+    bool borrar = false;
+    //si la lista no es vacio y tenemos ese calendario en la lista
+    if(this->Primera().EsVacia() == false && Buscar(c) == true){
+        TNodoCalendario auxiliar;
+        for(int i = 0; i < this->Longitud(); i++){
+            if(tcalen == this->primero->c){
+                //si es igual nos saltamos el nodo que queremos borrar
+                auxiliar = this->primero;
+                this->primero = this->primero->siguiente;
+                borrar = true;
+            }
+            else{
+                //si no, pasamos al siguiente y continuamos
+                auxiliar = this->primero->siguiente;
+                this->primero = auxiliar;
+                borrar = true;
+            }
+        }
+    }
+    return borrar;
 }
 
+//obtenemos el calendario de la posicion dada y llamamos al borrar que recibe un tcalendario
 bool TListaCalendario::Borrar(TListaPos &tlista){
-    //este llama al borrar que elimina tcalendario
+    return this->Borrar(this->Obtener(tlista));
 }
 
-bool TListaCalendario::Borrar(int dia, int mes, int anyo){
+bool TListaCalendario::Borrar(int dia, int mes, int anyo){  //faltan cosas, carencias
     bool borrable = false;
     if(this->Primera().EsVacia()){
         borrable = false;
     }
     else{
-        
+        TCalendario calen = new TCalendario(dia, mes, anyo, NULL);
+        if(this->Buscar(calen)){
+            bool menores = false;
+            for(int i = 0; i < this->Longitud() && menores == false; i++){
+                if(this->primero->c[i] < calen){
+                    menores = true;
+                }
+            }
+            if(menores == true){
+                borrable = true;
+            }
+        }
     }
     return borrable;
 }
