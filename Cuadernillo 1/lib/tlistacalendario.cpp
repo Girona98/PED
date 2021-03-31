@@ -380,7 +380,7 @@ TListaPos TListaCalendario::Ultima() const{
 }
 
 TListaCalendario TListaCalendario::SumarSubl(int I_L1, int F_L1, TListaCalendario &L2, int I_L2, int F_L2){
-
+    
 }
 
 TListaCalendario TListaCalendario::ExtraerRango(int n1, int n2){

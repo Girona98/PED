@@ -3,37 +3,32 @@
 using namespace std;
 
 #include "tcalendario.h"
-#include "tvectorcalendario.h"
-
+#include "tlistacalendario.h"
 
 int
 main(void)
 {
-   TVectorCalendario a(3);
-   TCalendario ca1(1,1,2006, (char*) "uno"), ca2(1,2,2006, (char*) "dos"), ca3(1,3,2006, (char*) "tres");
+  TCalendario a(1, 1, 1977, (char*) "uno");
+  TCalendario b(1, 1, 1980, (char*) "dos");
+  TListaCalendario l1;
 
-   a[1]=ca1;
-   a[2]=ca2;
-   a[3]=ca3;
-   
-   //Imprimimos el vector
-   cout << a << endl;
+  if(l1.EsVacia())
+    cout << "Lista vacia" << endl;
+  else
+    cout << "Lista no vacia" << endl;
+  
+  l1.Insertar(b);
+  cout << l1.Obtener(l1.Primera()) << endl;
+  
+  l1.Insertar(a);
+  cout << l1.Obtener(l1.Primera()) << endl;
 
-   //cout << a[1] << endl;
-   //cout << a[0] << endl;
-   //Pasamos fecha incorrecta
-   a.MostrarMensajes(32,12,2000);
-   cout << endl;
-
-   //Pasamos fecha correcta
-   a.MostrarMensajes(1,1,2006);
-   cout << endl;
-
-   //Pasamos fecha incorrecta
-   a.MostrarMensajes(30,17,2000);
-   cout << endl;
-
-   //Pasamos fecha correcta
-   a.MostrarMensajes(1,2,2006);
-   cout << endl;
+  cout << "l1 = " << l1 << endl;
+  
+  if(l1.EsVacia())
+    cout << "Lista vacia" << endl;
+  else
+    cout << "Lista no vacia" << endl;
+  
+  return 0;
 }
