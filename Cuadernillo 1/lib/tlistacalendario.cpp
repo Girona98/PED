@@ -193,7 +193,13 @@ TListaCalendario TListaCalendario::operator-(TListaCalendario& tlista){
 }
 
 bool TListaCalendario::Insertar(TCalendario &tcalen){
-
+    TNodoCalendario aux1;
+    TNodoCalendario aux2;
+    TNodoCalendario aux3;
+    aux1 = this->primero;
+    if(nodo.EsVacia() == true){
+        
+    }
 }
 
 bool TListaCalendario::Borrar(TCalendario &tcalen){
@@ -325,7 +331,7 @@ ostream& operator<<(ostream& salida, TListaCalendario &tlista){
         TNodoCalendario nodo = tlista.primero;
         cout<<"<";
         for(int i = 0; i < tlista.Longitud(); i++){
-            cout<<tlista.Obtener(nodo);
+            cout<<tlista.primero->c;
             if(i >= 0 && i < tlista.Longitud() - 1){
                 cout<<", ";
             }    
