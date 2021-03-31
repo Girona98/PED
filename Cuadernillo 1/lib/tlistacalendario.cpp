@@ -135,7 +135,8 @@ TListaCalendario::TListaCalendario(TListaCalendario& tlista){
 
 
 TListaCalendario::~TListaCalendario(){
-    this->primero->~TNodoCalendario();  //veo carencias
+    // this->primero->~TNodoCalendario();  //veo carencias
+    this->primero = NULL;
 }
 
 TListaCalendario& TListaCalendario::operator=(TListaCalendario &tlista){
@@ -283,24 +284,30 @@ bool TListaCalendario::Borrar(TListaPos &tlista){
     return this->Borrar(calen);
 }
 
-//creo que hay carencias aqui
+//FALTA POCO PARA TERMINAR ESTE BORRAR
 bool TListaCalendario::Borrar(int dia, int mes, int anyo){  
-    bool borrable = false;                                     
-    if(this->Primera().EsVacia()){
-        borrable = false;
-    }
-    else{
-        TCalendario calen = TCalendario(dia, mes, anyo, NULL);
-        if(this->Buscar(calen)){
-            bool menores = false;
-            for(int i = 0; i < this->Longitud() && menores == false; i++){
-                if(this->primero->c < calen){
-                    menores = true;
-                    this->Borrar(this->primero->c);
-                }
-            }
-            if(menores == true){
+    TNodoCalendario *nodoeliminar;              //aeliminar
+    TNodoCalendario *auxiliar = this->primero; //aux
+    TCalendario calen = TCalendario(dia, mes, anyo, NULL);
+    bool borrable = false;
+
+    while(auxiliar->siguiente != NULL){
+        if(auxiliar->c == calen){
+            nodoeliminar = this->primero;
+            this->primero = this->primero->siguiente;
+            auxiliar = auxiliar->siguiente;
+            this->Borrar(nodoeliminar->c);
+            borrable = true;
+        }
+        else{
+            if(auxiliar->siguiente != NULL && auxiliar->siguiente->c == calen){
+                nodoeliminar = auxiliar->siguiente;
+                auxiliar->siguiente = auxiliar->siguiente->siguiente; 
+                this->Borrar(nodoeliminar->c);
                 borrable = true;
+            }
+            else{
+                auxiliar = auxiliar->siguiente;
             }
         }
     }
@@ -380,7 +387,7 @@ TListaPos TListaCalendario::Ultima() const{
 }
 
 TListaCalendario TListaCalendario::SumarSubl(int I_L1, int F_L1, TListaCalendario &L2, int I_L2, int F_L2){
-    
+
 }
 
 TListaCalendario TListaCalendario::ExtraerRango(int n1, int n2){
