@@ -9,7 +9,6 @@ int
 main(void)
 {
   TListaCalendario l1;
-  
   if((l1.Primera()).EsVacia())
     cout << "Direccion vacia" << endl;
   else

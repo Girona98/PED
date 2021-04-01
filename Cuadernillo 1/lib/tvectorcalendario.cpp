@@ -211,7 +211,7 @@ bool TVectorCalendario::Redimensionar(int tam){
     return red;
 }
 
-ostream& operator<<(ostream& salida, TVectorCalendario& tvector){
+ostream& operator<<(ostream& salida, const TVectorCalendario& tvector){
     salida<<"[";
     if(tvector.tamano == 0){
         salida<<"]";

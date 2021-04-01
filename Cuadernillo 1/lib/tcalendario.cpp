@@ -382,7 +382,7 @@ TCalendario& TCalendario::operator--(){  //con predecremento
     return *this;
 }
 
-bool TCalendario::operator==(const TCalendario& calen){
+bool TCalendario::operator==(const TCalendario& calen)const{
     bool igual = false;                                                  
     if(dia == calen.dia && mes == calen.mes && anyo == calen.anyo){
         if(mensaje == NULL || calen.mensaje == NULL){
@@ -409,7 +409,7 @@ bool TCalendario::operator!=(const TCalendario& calen){
     return !(*this == calen);
 }
 
-bool TCalendario::operator>(const TCalendario& calen){
+bool TCalendario::operator>(const TCalendario& calen)const{
     bool mayor = false;
     if(this->anyo > calen.anyo){
         mayor = true;
@@ -444,7 +444,7 @@ bool TCalendario::operator>(const TCalendario& calen){
     return mayor;
 }
 
-bool TCalendario::operator<(const TCalendario& calen){
+bool TCalendario::operator<(const TCalendario& calen)const{
     bool menor = false;
     if(this->anyo < calen.anyo){
         menor = true;
@@ -469,7 +469,7 @@ bool TCalendario::operator<(const TCalendario& calen){
     return menor;
 }
 
-bool TCalendario::EsVacio(){
+bool TCalendario::EsVacio()const{
     bool vacio = false;
     if(dia == 1 && mes == 1 && anyo == 1900 && mensaje == NULL){
         vacio = true;
@@ -477,15 +477,15 @@ bool TCalendario::EsVacio(){
     return vacio;
 }
 
-const int TCalendario::Dia(){
+const int TCalendario::Dia()const{
     return dia;
 }
 
-const int TCalendario::Mes(){
+const int TCalendario::Mes()const{
     return mes;
 }
 
-const int TCalendario::Anyo(){
+const int TCalendario::Anyo()const{
     return anyo;
 }
 

@@ -5,7 +5,7 @@
 using namespace std;
 
 class TVectorCalendario{
-    friend ostream& operator<<(ostream&, TVectorCalendario&);
+    friend ostream& operator<<(ostream&, const TVectorCalendario&);
     private:
         TCalendario *c;
         int tamano;

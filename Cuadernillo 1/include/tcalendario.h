@@ -31,14 +31,14 @@ class TCalendario{
         TCalendario& operator--();              //modifica la fecha decrementandola en un dia(con predecremento)
         bool ModFecha(int, int, int);           //modifica la fecha
         bool ModMensaje(char*);                 //modifica el mensaje
-        bool operator==(const TCalendario&);          //sobrecarga del operador igualdad
+        bool operator==(const TCalendario&)const;          //sobrecarga del operador igualdad
         bool operator!=(const TCalendario&);          //sobrecarga del operador desigualdad
-        bool operator>(const TCalendario&);           //sobrecarga del operador >
-        bool operator<(const TCalendario&);           //sobrecarga del operador <
-        bool EsVacio();                         //TCalendario vacio
-        const int Dia();                              //devuelve el dia del calendario
-        const int Mes();                              //devuelve el mes del calendario
-        const int Anyo();                             //devuelve el año del calendario
+        bool operator>(const TCalendario&) const;           //sobrecarga del operador >
+        bool operator<(const TCalendario&) const;           //sobrecarga del operador <
+        bool EsVacio() const;                         //TCalendario vacio
+        const int Dia()const;                              //devuelve el dia del calendario
+        const int Mes()const;                              //devuelve el mes del calendario
+        const int Anyo()const;                             //devuelve el año del calendario
         const char* Mensaje();                        //devuelve el mensaje del calendario
 };
 #endif
