@@ -409,6 +409,7 @@ bool TCalendario::operator!=(const TCalendario& calen){
     return !(*this == calen);
 }
 
+
 bool TCalendario::operator>(const TCalendario& calen)const{
     bool mayor = false;
     if(this->anyo > calen.anyo){
@@ -442,80 +443,47 @@ bool TCalendario::operator>(const TCalendario& calen)const{
         }
     }
     return mayor;
+
+    // return !(this < &calen);
 }
 
-// bool TCalendario::operator<(const TCalendario& calen)const{
-//     bool menor = false;
-//     if(this->anyo < calen.anyo){
-//         menor = true;
-//     }
-//     else if(this->anyo == calen.anyo){
-//         if(this->mensaje == NULL && calen.mensaje == NULL){
-//             menor = false;
-//         }
-//         else if(this->mensaje != NULL && calen.mensaje == NULL){
-//             menor = false;
-//         }
-//         else if(this->mensaje == NULL && calen.mensaje != NULL){
-//             menor = true;
-//         }
-//         else if(strlen(this->mensaje) < strlen(calen.mensaje)){
-//             menor = true;
-//         }
-//         else if(strlen(this->mensaje) == strlen(calen.mensaje)){
-//             menor = false;
-//         }
-//     }
-//     return menor;
-// }
 
-bool TCalendario::operator<(const TCalendario& c) const{
-	if(anyo<c.anyo){
-				return true;
-		}
-		else{
-			if(anyo==c.anyo){
-				if(mes<c.mes){
-						return true;
-				}
-				else{
-					if(mes==c.mes){
-						if(dia<c.dia){
-							return true;
-						}
-						else{
-							if(dia==c.dia){
-								if(mensaje==NULL && c.mensaje==NULL){//NULL<NULL-->FALSE
-									return false;
-								}
-								else if(mensaje==NULL){//NULL<X-->TRUE
-									return true;
-								}
-								else if(c.mensaje==NULL){//X<NULL-->FALSE
-									return false;
-								}
-								else{
-									if(strcmp(mensaje, c.mensaje)==0){//X<X-->FALSE
-										return false;
-									}
-									else if(strcmp(mensaje, c.mensaje)<0){//X<Y-->TRUE
-										return true;
-									}
-									else{//Y<X-->FALSE
-										return false;
-									}
-
-								}
-							}
-							return false;
-						}
-					}
-					return false;
-				}
-			}
-			return false;
-		}
+bool TCalendario::operator<(const TCalendario &calen) const{
+    bool menor = false;
+    if(this->anyo < calen.anyo){
+        menor = true;
+    }
+    else if(anyo == calen.anyo){
+        if(mes < calen.mes){
+            menor = true;
+        }
+        else if(mes == calen.mes){
+            if(dia < calen.dia){
+                menor = true;
+            }
+            else if(dia == calen.dia){
+                if(this->mensaje == NULL && calen.mensaje == NULL){
+                    menor = false;
+                }
+                else if(this->mensaje != NULL && calen.mensaje == NULL){
+                    menor = false;
+                }
+                else if(this->mensaje == NULL && calen.mensaje != NULL){
+                    menor = true;
+                }
+                else if(strlen(this->mensaje) < strlen(calen.mensaje)){
+                    menor = true;
+                }
+                else if(strlen(this->mensaje) == strlen(calen.mensaje)){
+                    menor = false;
+                }
+            }
+        }
+    }
+    return menor;
 }
+
+
 
 bool TCalendario::EsVacio()const{
     bool vacio = false;

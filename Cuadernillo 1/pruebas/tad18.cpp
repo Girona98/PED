@@ -37,8 +37,9 @@ main(void)
   lista.Insertar(i);
   lista.Insertar(j);
 
+  
   lista.Borrar(14,10,2006);
-
+  
   p=lista.Primera();  
 
   cout<<lista.Obtener(p)<<endl;

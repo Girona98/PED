@@ -284,28 +284,6 @@ bool TListaCalendario::Borrar(const TListaPos &tlista){
     return this->Borrar(calen);
 }
 
-/*bool TListaCalendario::Borrar(int d,int m,int a){
-    TCalendario aux(d,m,a,NULL);
-    TNodoCalendario *pos=primero;
-    TNodoCalendario *temp;
-    bool borrado = false;
-
-    if(Ultima().pos->c < aux){
-        primero=NULL;
-        return true;
-    }
-
-    while(pos != NULL && pos->c < aux)
-    {
-        borrado = true;
-        pos = pos->siguiente;
-        primero = pos;
-
-    }
-
-    return borrado;
-}*/
-
 
 
 bool TListaCalendario::Borrar(int dia, int mes, int anyo){  
@@ -314,15 +292,18 @@ bool TListaCalendario::Borrar(int dia, int mes, int anyo){
     TCalendario *calen = new TCalendario(dia, mes, anyo, NULL);     
     int contador = 1;
     int fin = this->Longitud();
+
     if(this->Ultima().pos->c < *calen){
         this->primero = NULL;
         return true;
     }
-    while(nodo != NULL){
+    while(nodo->c < *calen && nodo != NULL){
         calen->ModMensaje(nodo->c.Mensaje());
-        
-        // if(nodo->siguiente == NULL && nodo->c < *calen){ //si es el ultimo nodo y es menor que el calendario
-        if(nodo->siguiente == NULL && calen->Dia() > nodo->c.Dia() && calen->Mes() > nodo->c.Mes() && calen->Anyo() > nodo->c.Anyo()){
+        nodo = nodo->siguiente;
+        this->primero = nodo;
+        borrar = true;
+        /*if(nodo->siguiente == NULL && nodo->c < *calen){ //si es el ultimo nodo y es menor que el calendario
+        // if(nodo->siguiente == NULL && calen->Dia() > nodo->c.Dia() && calen->Mes() > nodo->c.Mes() && calen->Anyo() > nodo->c.Anyo()){
             this->primero = NULL;
             break;
         }
@@ -336,11 +317,10 @@ bool TListaCalendario::Borrar(int dia, int mes, int anyo){
         }
         else{
             nodo = nodo->siguiente; 
-        }
+        }*/
     }
     return borrar;
 }
-
 
 
 bool TListaCalendario::EsVacia()const{
