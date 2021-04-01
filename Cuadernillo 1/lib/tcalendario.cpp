@@ -247,7 +247,7 @@ bool TCalendario::ModFecha(int nuevodia, int nuevomes, int nuevoanyo){
     return mod;
 }
 
-bool TCalendario::ModMensaje(char* mensaje){  //como devuelvo true o false por fallo memoria
+bool TCalendario::ModMensaje(const char* mensaje){  //como devuelvo true o false por fallo memoria
     if(mensaje == NULL){
         this->mensaje = NULL;
     }
@@ -444,29 +444,77 @@ bool TCalendario::operator>(const TCalendario& calen)const{
     return mayor;
 }
 
-bool TCalendario::operator<(const TCalendario& calen)const{
-    bool menor = false;
-    if(this->anyo < calen.anyo){
-        menor = true;
-    }
-    else if(this->anyo == calen.anyo){
-        if(this->mensaje == NULL && calen.mensaje == NULL){
-            menor = false;
-        }
-        else if(this->mensaje != NULL && calen.mensaje == NULL){
-            menor = false;
-        }
-        else if(this->mensaje == NULL && calen.mensaje != NULL){
-            menor = true;
-        }
-        else if(strlen(this->mensaje) < strlen(calen.mensaje)){
-            menor = true;
-        }
-        else if(strlen(this->mensaje) == strlen(calen.mensaje)){
-            menor = false;
-        }
-    }
-    return menor;
+// bool TCalendario::operator<(const TCalendario& calen)const{
+//     bool menor = false;
+//     if(this->anyo < calen.anyo){
+//         menor = true;
+//     }
+//     else if(this->anyo == calen.anyo){
+//         if(this->mensaje == NULL && calen.mensaje == NULL){
+//             menor = false;
+//         }
+//         else if(this->mensaje != NULL && calen.mensaje == NULL){
+//             menor = false;
+//         }
+//         else if(this->mensaje == NULL && calen.mensaje != NULL){
+//             menor = true;
+//         }
+//         else if(strlen(this->mensaje) < strlen(calen.mensaje)){
+//             menor = true;
+//         }
+//         else if(strlen(this->mensaje) == strlen(calen.mensaje)){
+//             menor = false;
+//         }
+//     }
+//     return menor;
+// }
+
+bool TCalendario::operator<(const TCalendario& c) const{
+	if(anyo<c.anyo){
+				return true;
+		}
+		else{
+			if(anyo==c.anyo){
+				if(mes<c.mes){
+						return true;
+				}
+				else{
+					if(mes==c.mes){
+						if(dia<c.dia){
+							return true;
+						}
+						else{
+							if(dia==c.dia){
+								if(mensaje==NULL && c.mensaje==NULL){//NULL<NULL-->FALSE
+									return false;
+								}
+								else if(mensaje==NULL){//NULL<X-->TRUE
+									return true;
+								}
+								else if(c.mensaje==NULL){//X<NULL-->FALSE
+									return false;
+								}
+								else{
+									if(strcmp(mensaje, c.mensaje)==0){//X<X-->FALSE
+										return false;
+									}
+									else if(strcmp(mensaje, c.mensaje)<0){//X<Y-->TRUE
+										return true;
+									}
+									else{//Y<X-->FALSE
+										return false;
+									}
+
+								}
+							}
+							return false;
+						}
+					}
+					return false;
+				}
+			}
+			return false;
+		}
 }
 
 bool TCalendario::EsVacio()const{
@@ -489,7 +537,7 @@ const int TCalendario::Anyo()const{
     return anyo;
 }
 
-const char* TCalendario::Mensaje(){
+const char* TCalendario::Mensaje()const{
     return mensaje;
 }
 

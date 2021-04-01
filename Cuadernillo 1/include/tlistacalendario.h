@@ -16,7 +16,7 @@ class TNodoCalendario{
         TNodoCalendario(); //constructor por defecto
         TNodoCalendario(const TNodoCalendario &); //constructor de copia
         ~TNodoCalendario(); //destructor
-        TNodoCalendario &operator=(TNodoCalendario&);
+        TNodoCalendario &operator=(const TNodoCalendario&);
 };
 
 class TListaPos{
