@@ -322,22 +322,6 @@ bool TListaCalendario::Borrar(int dia, int mes, int anyo){
         nodo = nodo->siguiente;
         this->primero = nodo;
         borrar = true;
-        /*if(nodo->siguiente == NULL && nodo->c < *calen){ //si es el ultimo nodo y es menor que el calendario
-        // if(nodo->siguiente == NULL && calen->Dia() > nodo->c.Dia() && calen->Mes() > nodo->c.Mes() && calen->Anyo() > nodo->c.Anyo()){
-            this->primero = NULL;
-            break;
-        }
-        else if(nodo->siguiente == NULL && *calen == nodo->c){   //si es el ultimo elemento de la lista y es igual
-            this->primero = nodo;
-            break;
-        }
-        else if(nodo->c < *calen && nodo->siguiente != NULL){       //si el nodo por el que vamos es menos que el calendario
-            nodo = nodo->siguiente;
-            borrar = true;
-        }
-        else{
-            nodo = nodo->siguiente; 
-        }*/
     }
     return borrar;
 }
