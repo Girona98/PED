@@ -395,7 +395,75 @@ TListaPos TListaCalendario::Ultima() const{
 }
 
 TListaCalendario TListaCalendario::SumarSubl(int I_L1, int F_L1, TListaCalendario &L2, int I_L2, int F_L2){
-    return*this;
+    //I_L1 y F_L1 es el rango del que extraemos una sublista de la lista que apunta this
+    //I_L2 y F_L2 es el rango del que extraemos una sublista de la lista L2 que nos pasan
+    //comenzamos a numerar desde el 1
+    TListaCalendario listathis = *this;
+    TListaCalendario subl1;
+    TListaCalendario subl2;
+    TListaCalendario resultado;
+
+    //////////COMPROBACIONES INICIALES DE LOS RANGOS/////////////////////////////////
+    //si sobrepasamos por la derecha, es decir el final del rango es mayor a la longitud de la lista
+    if(F_L1 > listathis.Longitud()){
+        cout<<"!!Me paso en F_L1!!";
+        F_L1 = listathis.Longitud();
+    }
+
+    if(F_L2 > L2.Longitud()){
+        cout<<"!!Me paso en F_L2!!";
+        F_L2 = L2.Longitud();
+    }
+    //si nos pasan un inicio de rango menor o igual a 0
+    if(I_L1 <= 0){
+        cout<<"!!No llego en I_L1!!";
+        I_L1 = 1;
+    }
+
+    if(I_L2 <= 0){
+        cout<<"!!No llego en I_L2!!";
+        I_L2 = 1;
+    }
+    //si nos pasan un rango que no tiene sentido, debemos devolver una lista vacia
+    if(I_L1 > F_L1){
+        cout<<"!!No sense L1!!";
+        subl1.primero = NULL;
+    }
+    else{
+        cout<<"!!CosasL1!!";
+        subl1 = listathis.ExtraerRango(I_L1, F_L1);
+        cout<<"Lista1: "<<listathis<<"   SubL1: "<<subl1<<"     ";
+    }
+
+    if(I_L2 > F_L2){
+        cout<<"!!No sense L2!!";
+        subl2.primero = NULL;
+    }
+    else{
+        cout<<"!!CosasL2!!";
+        subl2 = L2.ExtraerRango(I_L2, F_L2);
+        cout<<"Lista2: "<<L2<<"   SubL2: "<<subl2<<"     ";
+    }
+    
+    /////////////////////CALCULAMOS EL RESULTADO////////////////////
+    if(subl1.primero == NULL && subl2.primero == NULL){
+        cout<<"-if1-";
+        resultado.primero = NULL;
+    }
+    else if(subl1.primero == NULL && subl2.primero != NULL){
+        cout<<"-if2-";
+        resultado = subl2;
+    }
+    else if(subl1.primero != NULL && subl2.primero == NULL){
+        cout<<"-if3-";
+        resultado = subl2;
+    }
+    else{
+        cout<<"-if4-";
+        resultado = subl1 + subl2;
+    }
+
+   return resultado;
 }
 
 TListaCalendario TListaCalendario::ExtraerRango(int n1, int n2){
@@ -437,9 +505,11 @@ TListaCalendario TListaCalendario::ExtraerRango(int n1, int n2){
     }
     else if(n1 > n2){
         //return lista vacia 
+        cout<<"Hola?1";
         return *newlista;
     }
     else{ //no se si esta bien
+    cout<<"Hola?2";
         return *newlista;
     }
 }
