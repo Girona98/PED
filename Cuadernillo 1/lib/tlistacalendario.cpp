@@ -294,8 +294,13 @@ bool TListaCalendario::Borrar(const TCalendario &tcalen){
 
 //obtenemos el calendario de la posicion dada y llamamos al borrar que recibe un tcalendario
 bool TListaCalendario::Borrar(const TListaPos &tlista){
-    TCalendario calen = tlista.pos->c;
-    return this->Borrar(calen);
+    if(tlista.pos != NULL){
+        TCalendario calen = tlista.pos->c;
+        return this->Borrar(calen); 
+    }
+    else{
+        return false;
+    }
 }
 
 
