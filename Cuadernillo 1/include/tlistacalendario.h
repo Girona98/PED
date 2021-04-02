@@ -47,7 +47,7 @@ class TListaCalendario{
         ~TListaCalendario();                                        //destructor
         TListaCalendario& operator=(const TListaCalendario&);             //sobrecarga del operador asingacion
         bool operator==(const TListaCalendario&);                         //sobrecarga del operador igualdad
-        TListaCalendario operator+(const TListaCalendario&);        //sobrecarga del operador suma
+        TListaCalendario operator+(const TListaCalendario&)const;        //sobrecarga del operador suma
         TListaCalendario operator-(const TListaCalendario&);        //sobrecarga del operador resta
         bool Insertar(const TCalendario &);                               // Inserta el elemento en la posición que le corresponda dentro de la lista
         bool Borrar(const TCalendario &);                                 // Busca y borra el elemento
@@ -55,7 +55,7 @@ class TListaCalendario{
         bool Borrar(int,int,int);                                   //Borra todos los Calendarios con fecha ANTERIOR a la pasada.
         bool EsVacia() const;                                       // Devuelve true si la lista está vacía, false en caso contrario
         TCalendario Obtener(const TListaPos&) const;                       //obtiene el elemento que ocupa la posicion indicada
-        bool Buscar(const TCalendario&);                            //devuelve true si el calendario esta en la lista
+        bool Buscar(const TCalendario&)const;                            //devuelve true si el calendario esta en la lista
         int Longitud() const;                                       //devuelve la longitud de la lista
         TListaPos Primera() const;                                   //devuelve la primera posicion en la lista
         TListaPos Ultima() const;                                   //devuelve la ultima posicion en la lista

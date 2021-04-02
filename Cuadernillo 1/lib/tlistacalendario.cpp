@@ -109,19 +109,26 @@ TListaCalendario::TListaCalendario(){
 }
 
 TListaCalendario::TListaCalendario(const TListaCalendario& tlista){
-    this->primero = tlista.primero;
+    TListaPos listaposis;
+    this->primero = NULL;
+    listaposis = tlista.Primera();
+    for(int i = 0; !(listaposis.EsVacia()); i++){
+        this->Insertar(listaposis.pos->c);
+        listaposis = listaposis.Siguiente();
+    }
 }
 
-
 TListaCalendario::~TListaCalendario(){
+    TListaPos posi1;
+    TListaPos posi2;
+
+    posi2 = this->Primera();
+    while(posi2.EsVacia() == false){
+        posi1 = posi2;
+        posi2 = posi2.Siguiente();
+        delete posi1.pos;
+    }
     this->primero = NULL;
-    
-    // TNodoCalendario *nodo = this->primero;
-    // while(primero != NULL){
-    //     nodo = this->primero->siguiente; // nos guardamos el nodo siguiente en nodo
-    //     delete this->primero;                  // liberamos memoria
-    //     this->primero = nodo;            // el primer nodo pasa a ser el nodo auxiliar
-    // }
 }
 
 
@@ -144,41 +151,48 @@ TListaCalendario& TListaCalendario::operator=(const TListaCalendario &tlista){
 }
 
 bool TListaCalendario::operator==(const TListaCalendario& tlista){
-    bool igual = true;
+    bool iguales = false;
     if(this->Longitud() == tlista.Longitud()){
-        TNodoCalendario *nodo1;
-        TNodoCalendario *nodo2;
-        nodo1 = this->primero;
-        nodo2 = tlista.primero;
-        for(int i = 0; i < tlista.Longitud() && igual == true; i++){
-            if(nodo1 != nodo2){
-                igual = false;
-            }
-            nodo1 = nodo1->siguiente;
-            nodo2 = nodo2->siguiente;
-        }
-    }
-    return igual;
-}
-
-TListaCalendario TListaCalendario::operator+(const TListaCalendario& tlista){
-    TListaCalendario sumalista = *this; //referencialo tontito
-    TNodoCalendario *aux = this->primero;
-    TNodoCalendario *nodo = tlista.primero;
-
-    for(int i = 0; i < tlista.Longitud(); i++){
-        if( this->Buscar(nodo->c) == false ){
-            sumalista.Insertar(nodo->c);
-            nodo=nodo->siguiente;
-            aux = aux->siguiente;
+        if(this->Longitud() == 0){
+            iguales = true;
         }
         else{
-            nodo = nodo->siguiente;
-            aux = aux->siguiente;
+            TNodoCalendario *nodo1;
+            nodo1 = this->primero;
+            TNodoCalendario *nodo2;
+            nodo2 = tlista.primero;
+            for(int i = 1; i <= tlista.Longitud(); i++){
+                if(nodo1->c != nodo2->c){
+                    iguales = false;
+                    break;
+                }
+                else{
+                    iguales = true;
+                }
+                nodo1 = nodo1->siguiente;
+                nodo2 = nodo2->siguiente;
+            }
         }
+    }
+    else{
+        iguales = false;
+    }
+    return iguales;
+}
+
+
+TListaCalendario TListaCalendario::operator+(const TListaCalendario& tlista)const{
+    TListaCalendario sumalista(*this); //referencialo tontito
+    TListaPos listaposi;
+    listaposi.pos = tlista.primero;
+
+    for(int i = 0; !listaposi.EsVacia(); i++){
+        sumalista.Insertar(listaposi.pos->c);
+        listaposi = listaposi.Siguiente();
     }
     return sumalista;
 }
+
 
 
 TListaCalendario TListaCalendario::operator-(const  TListaCalendario& tlista){  //cambiar for por while para probar
@@ -265,7 +279,7 @@ bool TListaCalendario::Borrar(const TCalendario &tcalen){
             break;
         }
         else{
-            if(nodo->siguiente->c == tcalen && nodo->siguiente != NULL){
+            if(nodo->siguiente != NULL &&nodo->siguiente->c == tcalen){
                 nodo->siguiente = nodo->siguiente->siguiente;
                 borrar = true;
                 break;
@@ -292,7 +306,8 @@ bool TListaCalendario::Borrar(int dia, int mes, int anyo){
     TCalendario *calen = new TCalendario(dia, mes, anyo, NULL);     
     int contador = 1;
     int fin = this->Longitud();
-
+    
+    calen->ModMensaje(nodo->c.Mensaje());
     if(this->Ultima().pos->c < *calen){
         this->primero = NULL;
         return true;
@@ -343,7 +358,7 @@ TCalendario TListaCalendario::Obtener(const TListaPos &tlista) const{
     }
 }
 
-bool TListaCalendario::Buscar(const TCalendario &tcalen){
+bool TListaCalendario::Buscar(const TCalendario &tcalen)const{
     bool encontrado = false;
     TNodoCalendario *nodo = this->primero;
     
