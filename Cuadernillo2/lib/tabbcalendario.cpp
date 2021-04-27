@@ -1,6 +1,5 @@
 #include "tabbcalendario.h"
 
-
 //el constructor llama mediante layering a los constructores de cada atributo
 TNodoABB::TNodoABB():item(), iz(), de(){}
 
@@ -21,20 +20,35 @@ TNodoABB& TNodoABB::operator=(TNodoABB &tnodo){
     return *this;
 }
 
+
 TABBCalendario::TABBCalendario(){
-    
+    this->raiz = new TNodoABB();
 }
 
 TABBCalendario::TABBCalendario(TABBCalendario& tabb){
-
+    if(tabb.raiz == NULL){
+        this->raiz = NULL;
+    }
+    else{
+        this->raiz = new TNodoABB(*tabb.raiz);
+    }
 }
 
 TABBCalendario::~TABBCalendario(){
-
+    delete this->raiz;
+    this->raiz = NULL;
 }
 
 TABBCalendario& TABBCalendario::operator=(TABBCalendario& tabb){
-
+    if(this != NULL){
+        this->~TABBCalendario();
+        TABBCalendario *nuevotabb = new TABBCalendario(tabb);
+        return *nuevotabb;
+    }
+    else{
+        TABBCalendario *nuevotabb = new TABBCalendario(tabb);
+        return *nuevotabb;
+    }
 }
 
 bool TABBCalendario::operator==(TABBCalendario &tabb){
@@ -42,7 +56,12 @@ bool TABBCalendario::operator==(TABBCalendario &tabb){
 }
 
 bool TABBCalendario::EsVacio(){
-
+    if(this->raiz == NULL){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 bool TABBCalendario::Insertar(TCalendario &calen){
@@ -54,11 +73,42 @@ bool TABBCalendario::Borrar(TCalendario &calen){
 }
 
 bool TABBCalendario::Buscar(TCalendario &calen){
+    
+    if(this->EsVacio() == true){
+        return false;
+    }
+    else{
+        if(this->raiz->item == calen){
+            return true;
+        }
+        else{
+            if(calen > this->raiz->item){
+                return this->raiz->de.Buscar(calen);
+            }
+            else{
+                return this->raiz->iz.Buscar(calen);
+            }
+        }
+    }
+}
 
+TCalendario TABBCalendario::Raiz(){
+    if(this != NULL){
+        return this->raiz->item;
+    }
+    else{
+        TCalendario vacio = TCalendario();
+        return vacio;
+    }
 }
 
 int TABBCalendario::Altura(){
-
+    if(this->EsVacio() == true){
+        return 0;
+    }
+    else{
+        return (1 + max(this->raiz->iz.Altura(), this->raiz->de.Altura()));
+    }
 }
 
 int TABBCalendario::Nodos(){
@@ -67,6 +117,9 @@ int TABBCalendario::Nodos(){
 
 int TABBCalendario::NodosHoja(){
 
+    if(this->EsVacio() == true){
+
+    }
 }
 
 TVectorCalendario TABBCalendario::Inorden(){

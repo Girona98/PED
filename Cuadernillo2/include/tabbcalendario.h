@@ -6,6 +6,8 @@
 #include "tvectorcalendario.h"
 using namespace std;
 
+class TNodoABB;
+
 class TABBCalendario{
     friend class TNodoABB;
     private:
@@ -36,6 +38,8 @@ class TABBCalendario{
         bool Borrar(TCalendario&);
         //devuelve true si el lemeento esta en earbol, false si no
         bool Buscar(TCalendario&);
+        //devuelve el elemento de la raiz del arbol
+        TCalendario Raiz();
         //devuelve la altura del arbol
         int Altura();
         //devuelve el numero de nodos del arbol
