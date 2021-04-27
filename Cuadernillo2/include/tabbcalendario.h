@@ -7,6 +7,7 @@
 using namespace std;
 
 class TABBCalendario{
+    friend class TNodoABB;
     private:
         //Puntero al nodo
         TNodoABB *raiz;
@@ -28,7 +29,7 @@ class TABBCalendario{
         //Sobrecarga del operador igualdad
         bool operator==(TABBCalendario &);
         //devuelve true si el arbol esta vacio, false en caso contrario
-        bool EsVacui();
+        bool EsVacio();
         //inserta el elemento en el arbol
         bool Insertar(TCalendario&);
         //borra el elemento en el arbol
@@ -58,6 +59,7 @@ class TABBCalendario{
 };
 
 class TNodoABB{
+    friend class TABBCalendario;
     private:
         TCalendario item;   //elemento del nodo
         TABBCalendario iz, de; //subarbol izquierdo y derecho
