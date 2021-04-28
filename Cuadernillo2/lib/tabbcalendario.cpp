@@ -52,7 +52,7 @@ TABBCalendario& TABBCalendario::operator=(TABBCalendario& tabb){
 }
 
 bool TABBCalendario::operator==(TABBCalendario &tabb){
-
+    
 }
 
 bool TABBCalendario::EsVacio(){
@@ -112,13 +112,23 @@ int TABBCalendario::Altura(){
 }
 
 int TABBCalendario::Nodos(){
-
+    int nodos = 1 + this->raiz->iz.Nodos() + this->raiz->de.Nodos();
+    return nodos;
 }
 
 int TABBCalendario::NodosHoja(){
-
+    int totalhoja = 0;
     if(this->EsVacio() == true){
-
+        return totalhoja;
+    }
+    else{
+        if(this->raiz->iz.EsVacio() && this->raiz->de.EsVacio()){
+            totalhoja += 1;
+        }
+        else{
+            totalhoja += this->raiz->iz.NodosHoja();
+            totalhoja += this->raiz->de.NodosHoja();
+        }
     }
 }
 
