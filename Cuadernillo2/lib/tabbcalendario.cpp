@@ -197,13 +197,20 @@ TVectorCalendario TABBCalendario::Niveles(){
 }
 
 ostream &operator<<(ostream& salida, TABBCalendario& tabbcalen){
-    ta
+    
 }
 
 TABBCalendario TABBCalendario::operator+ (TABBCalendario &tabb){
-
+    TABBCalendario copia(this);
+    
 }
 
 TABBCalendario TABBCalendario::operator-(TABBCalendario &tabb){
+    TVectorCalendario tvector;
+    TABBCalendario copia;
+    tvector = this->Inorden();
+    
+    for(int i = 1; i < tvector.Tamano(); i++){
 
+    }
 }
