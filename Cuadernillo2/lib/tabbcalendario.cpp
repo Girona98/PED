@@ -156,10 +156,10 @@ TVectorCalendario TABBCalendario::Inorden(){
 }
 
 void TABBCalendario::InordenAux(TVectorCalendario &tvector, int &n){
-    this->raiz->iz.Inorden();
+    this->raiz->iz.InordenAux(tvector, n);
     tvector[n] = this->raiz->item;
     n++;
-    this->raiz->de.Inorden();
+    this->raiz->de.InordenAux(tvector, n);
 }
 
 TVectorCalendario TABBCalendario::Preorden(){
@@ -172,8 +172,8 @@ TVectorCalendario TABBCalendario::Preorden(){
 void TABBCalendario::PreordenAux(TVectorCalendario &tvector, int &n){
     tvector[n] = this->raiz->item;
     n++;
-    this->raiz->iz.Preorden();
-    this->raiz->de.Preorden();
+    this->raiz->iz.PreordenAux(tvector, n);
+    this->raiz->de.PreordenAux(tvector, n);
 }
 
 TVectorCalendario TABBCalendario::PostOrden(){
@@ -184,8 +184,8 @@ TVectorCalendario TABBCalendario::PostOrden(){
 }
 
 void TABBCalendario::PostordenAux(TVectorCalendario &tvector, int &n){
-    this->raiz->iz.PostOrden();
-    this->raiz->de.PostOrden();
+    this->raiz->iz.PostordenAux(tvector, n);
+    this->raiz->de.PostordenAux(tvector, n);
     tvector[n] = this->raiz->item;
     n++;
 }
@@ -227,4 +227,5 @@ TABBCalendario TABBCalendario::operator-(TABBCalendario &tabb){
             copia.Insertar(tvector[i]);
         }
     }
+    return copia;
 }
