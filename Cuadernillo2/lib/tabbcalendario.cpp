@@ -74,7 +74,7 @@ bool TABBCalendario::Insertar(TCalendario &calen){
            return false;
        }
        else{
-           if(calen < this->raiz.iz){
+           if(calen < this->raiz->iz.raiz->item){  //no se si esto esta bien
                 return this->raiz->iz.Insertar(calen);
            }
            else{
@@ -150,67 +150,81 @@ int TABBCalendario::NodosHoja(){
 
 TVectorCalendario TABBCalendario::Inorden(){
     TVectorCalendario tvector(this->Nodos());
-    this->InordenAux(tvector, 1); //porque el tvector cominenza en 1
+    int n = 1;
+    this->InordenAux(tvector, n); //porque el tvector cominenza en 1
     return tvector;
 }
 
 void TABBCalendario::InordenAux(TVectorCalendario &tvector, int &n){
     this->raiz->iz.Inorden();
-    tvector[n] = this->raiz;
+    tvector[n] = this->raiz->item;
     n++;
     this->raiz->de.Inorden();
 }
 
 TVectorCalendario TABBCalendario::Preorden(){
     TVectorCalendario tvector(this->Nodos());
-    this->PreordenAux(tvector, 1);
+    int n = 1;
+    this->PreordenAux(tvector, n);
     return tvector;
 }
 
 void TABBCalendario::PreordenAux(TVectorCalendario &tvector, int &n){
-    tvector[n] = this->raiz;
+    tvector[n] = this->raiz->item;
     n++;
     this->raiz->iz.Preorden();
     this->raiz->de.Preorden();
 }
 
 TVectorCalendario TABBCalendario::PostOrden(){
-    TVectorCalendario tvector(this->Nodos);
-    this->PostordenAux(tvector, 1);
+    TVectorCalendario tvector(this->Nodos());
+    int n = 1;
+    this->PostordenAux(tvector, n);
     return tvector;
 }
 
 void TABBCalendario::PostordenAux(TVectorCalendario &tvector, int &n){
     this->raiz->iz.PostOrden();
     this->raiz->de.PostOrden();
-    tvector[n] = this->raiz;
+    tvector[n] = this->raiz->item;
     n++;
 }
 
 TVectorCalendario TABBCalendario::Niveles(){
     //var cola = cola de arbol binario
-    TABBCalendario aux = this;
+    TABBCalendario aux(*this);
 
-    while(!cola.isEmpty()){
+    // while(!cola.isEmpty()){
 
-    }
+    // }
 }
 
 ostream &operator<<(ostream& salida, TABBCalendario& tabbcalen){
     
 }
-
+//creamos la copia del arbol actual, y realizamos la inserción del arbol de la derecha
+//en copia, segun su recorrido en inorden
 TABBCalendario TABBCalendario::operator+ (TABBCalendario &tabb){
-    TABBCalendario copia(this);
-    
+    TABBCalendario copia(*this);
+    TVectorCalendario tvector;
+    tvector = tabb.Inorden();
+    for(int i = 1; i < tvector.Tamano(); i++){
+        copia.Insertar(tvector[i]);
+    }
+    return copia;
 }
 
+//se recorre el operando árbol de la izquierda por INORDEN, y si el elemento 
+//NO está en el operando árbol de la derecha, se inserta en el árbol resultante 
+//(inicialmente vacío) y el proceso se repite para todos los elementos del 
+//operando de la izquierda. 
 TABBCalendario TABBCalendario::operator-(TABBCalendario &tabb){
     TVectorCalendario tvector;
-    TABBCalendario copia;
+    TABBCalendario copia(*this);
     tvector = this->Inorden();
-    
     for(int i = 1; i < tvector.Tamano(); i++){
-
+        if(tabb.Buscar(tvector[i]) == false){
+            copia.Insertar(tvector[i]);
+        }
     }
 }
