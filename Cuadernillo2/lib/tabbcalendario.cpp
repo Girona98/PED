@@ -117,7 +117,28 @@ bool TABBCalendario::Borrar(TCalendario &calen){
         return false;
     }
     else{
-        if()
+        if(calen == this->raiz->item){
+            if(this->raiz->iz.EsVacio() || this->raiz->de.EsVacio()){  // 0 ó 1 hijo
+            //no tiene hijo derecho, por lo cual analizamos el de la izquierda
+                if(this->raiz->de.EsVacio()){
+                    TNodoABB *nextnodo(this->raiz->iz.raiz);
+                    this->raiz = nextnodo; //hacemos que el nodo actual sea el nodo siguiente, eliminando el objetivo
+                }
+                else{
+                    //no tiene hijo izquierdo ,por lo cual analizamos el de la derecha
+                    if(this->raiz->iz.EsVacio()){
+                        TNodoABB *nextnodo(this->raiz->de.raiz);
+                        this->raiz = nextnodo;
+                    }
+                    else{
+                        this->raiz = NULL; //la raiz no tiene ningun hijo
+                    }
+                }
+            }
+            else{   // 2 hijos
+                
+            }
+        }
     }
 }
 
