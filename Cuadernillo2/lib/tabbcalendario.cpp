@@ -117,7 +117,13 @@ bool TABBCalendario::Borrar(TCalendario &calen){
                 }
             }
             else{   // 2 hijos
-                
+                //tenemos que sacar el maximo del arbol izquierdo
+                /////////CUIDAOOOOOOOOOOOOOOOOOOOOOO CHUCLADDAAAAAAAAAAAAAAAAAA
+                TNodoABB *nodo; 
+                //en la variable nodo tenemos que guardar el mayor de la izquierda
+                nodo->iz = this->raiz->iz;
+                nodo->de = this->raiz->de;
+                this->raiz = nodo;
             }
         }
         else if(calen > this->raiz->item){
