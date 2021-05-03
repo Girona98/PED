@@ -276,7 +276,7 @@ TABBCalendario TABBCalendario::operator+(TABBCalendario &tabb){
 //operando de la izquierda.
 TABBCalendario TABBCalendario::operator-(TABBCalendario &tabb){
     TVectorCalendario tvector;
-    TABBCalendario copia(*this);
+    TABBCalendario copia;
     tvector = this->Inorden();
     for (int i = 1; i <= tvector.Tamano(); i++){
         if (tabb.Buscar(tvector[i]) == false){
@@ -285,17 +285,3 @@ TABBCalendario TABBCalendario::operator-(TABBCalendario &tabb){
     }
     return copia;
 }
-
-/*
-TABBCalendario TABBCalendario::operator-( TABBCalendario &tabb){
-    TVectorCalendario vect(Inorden());
-    TABBCalendario resta;
-    for (int i = 1; i <=vect.Tamano(); i++){
-        TCalendario calen = vect[i];
-        if(!tabb.Buscar(calen)){
-            resta.Insertar(calen);
-        }
-    }
-    return resta;
-}
-*/
