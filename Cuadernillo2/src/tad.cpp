@@ -1,36 +1,38 @@
 #include <iostream>
-
+#include "tabbcalendario.h"
 using namespace std;
-
-#include "tcalendario.h"
-#include "tvectorcalendario.h"
-
 
 int
 main(void)
 {
-   TVectorCalendario a(3);
-   TCalendario ca1(1,1,2006, (char*) "uno"), ca2(1,2,2006, (char*) "dos"), ca3(1,3,2006, (char*) "tres");
-   TCalendario ca1b(1,1,2006,NULL), ca2b(1,2,2006, (char*) ""), ca3b(1,3,2006, (char*) " tres");
+/************************************************/
+/***************** INORDEN, PREORDEN, POSTORDEN */
+/************************************************/
 
-   a[1]=ca1;
-   a[2]=ca2;
-   a[3]=ca3;
-   
-   if (a.ExisteCal(ca1b))
-      cout<<"Existe"<<endl;
-   else
-      cout<<"No existe"<<endl;
-   
-   if (a.ExisteCal(ca2b))
-      cout<<"Existe"<<endl;
-   else
-      cout<<"No existe"<<endl;
 
-   if (a.ExisteCal(ca3b))
-      cout<<"Existe"<<endl;
-   else
-      cout<<"No existe"<<endl;
-   
-   return 0;
+TABBCalendario a;
+TVectorCalendario vec1, vec2, vec3;
+
+TCalendario c1(1,1,2011,"Fecha1");
+TCalendario c2(2,1,2011,"Fecha2");
+TCalendario c3(3,1,2011,"Fecha3");
+TCalendario c4(4,1,2011,"Fecha4");
+TCalendario c5(5,1,2011,"Fecha5");
+TCalendario c6(6,1,2011,"Fecha6");
+
+a.Insertar(c5);
+a.Insertar(c2);
+a.Insertar(c1);
+a.Insertar(c3);
+a.Insertar(c6);
+
+vec1 = a.Inorden();
+vec2 = a.Preorden();
+vec3 = a.Postorden();
+
+cout << "Inorden: " << vec1 << endl;
+cout << "Preorden: " << vec2 << endl;
+cout << "Postorden: " << vec3 << endl;
+
+return 0; 
 }

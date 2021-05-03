@@ -14,11 +14,11 @@ class TABBCalendario{
         //Puntero al nodo
         TNodoABB *raiz;
         //AUXILIAR: devuelve el recorrido en INORDEN
-        void InordenAux(TVectorCalendario &, int &);
+        void InordenAux(TVectorCalendario &, int &)const;
         //AUXILIAR: devuelve el recorrido en PREORDEN
-        void PreordenAux(TVectorCalendario&, int &);
+        void PreordenAux(TVectorCalendario&, int &)const;
         //AUXILIAR: devuelve el recorrido en POSTORDEN
-        void PostordenAux(TVectorCalendario&, int &);
+        void PostordenAux(TVectorCalendario&, int &)const;
     public:
         //Constructor por defecto
         TABBCalendario();
@@ -29,7 +29,7 @@ class TABBCalendario{
         //Sobrecarga del operador asignacion
         TABBCalendario &operator=(TABBCalendario&);
         //Sobrecarga del operador igualdad
-        bool operator==(TABBCalendario &);
+        bool operator==(TABBCalendario &) const;
         //devuelve true si el arbol esta vacio, false en caso contrario
         bool EsVacio();
         //inserta el elemento en el arbol
@@ -43,17 +43,17 @@ class TABBCalendario{
         //devuelve la altura del arbol
         int Altura();
         //devuelve el numero de nodos del arbol
-        int Nodos();
+        int Nodos()const;
         //devuelve el numero de nodos hoja en el arbol, la raiz puede ser nodo hoja
         int NodosHoja();
         //devuelve el recorrido en inorden sobre un vector
-        TVectorCalendario Inorden();
+        TVectorCalendario Inorden() const;
         //devuelve el recorrido en preorden sobre un vector
-        TVectorCalendario Preorden();
+        TVectorCalendario Preorden()const;
         //devuelve el recorrido en postorden sobre un vector
-        TVectorCalendario PostOrden();
+        TVectorCalendario Postorden()const;
         //devuelve el recorrido en niveles sobre un vector
-        TVectorCalendario Niveles();
+        TVectorCalendario Niveles()const;
         //sobrecarga del operador salida
         friend ostream &operator<<(ostream&, TABBCalendario&);
         //suma de dos ABB
