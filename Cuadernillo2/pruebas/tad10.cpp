@@ -11,9 +11,9 @@ main(void)
   TABBCalendario a,b, resta;
   TVectorCalendario vec;
 
-  TCalendario c1(1,1,2011,"Fecha1");
-  TCalendario c2(2,1,2011,"Fecha2");
-  TCalendario c3(3,1,2011,"Fecha3");
+  TCalendario c1(1,1,2011,(char*)"Fecha1");
+  TCalendario c2(2,1,2011,(char*)"Fecha2");
+  TCalendario c3(3,1,2011,(char*)"Fecha3");
 
   a.Insertar(c2);
   a.Insertar(c1);

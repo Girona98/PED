@@ -19,25 +19,27 @@ class TABBCalendario{
         void PreordenAux(TVectorCalendario&, int &)const;
         //AUXILIAR: devuelve el recorrido en POSTORDEN
         void PostordenAux(TVectorCalendario&, int &)const;
+        //auxiliar para realizar la copia de tabbcalendarios
+        void Copiar(const TABBCalendario &);
     public:
         //Constructor por defecto
         TABBCalendario();
         //Constructor de copia
-        TABBCalendario(TABBCalendario&);
+        TABBCalendario(const TABBCalendario&);
         //Destructor
         ~TABBCalendario();
         //Sobrecarga del operador asignacion
-        TABBCalendario &operator=(TABBCalendario&);
+        TABBCalendario &operator=(const TABBCalendario&);
         //Sobrecarga del operador igualdad
         bool operator==(TABBCalendario &) const;
         //devuelve true si el arbol esta vacio, false en caso contrario
-        bool EsVacio();
+        bool EsVacio()const;
         //inserta el elemento en el arbol
         bool Insertar(TCalendario&);
         //borra el elemento en el arbol
         bool Borrar(TCalendario&);
         //devuelve true si el lemeento esta en earbol, false si no
-        bool Buscar(TCalendario&);
+        bool Buscar(const TCalendario&)const;
         //devuelve el elemento de la raiz del arbol
         TCalendario Raiz();
         //devuelve la altura del arbol
@@ -71,7 +73,7 @@ class TNodoABB{
         //Consturctor por defecto
         TNodoABB();
         //Constructor copia 
-        TNodoABB(TNodoABB &);
+        TNodoABB(const TNodoABB &);
         //Destructor
         ~TNodoABB();
         //Sobrecarga del operador asignacion
