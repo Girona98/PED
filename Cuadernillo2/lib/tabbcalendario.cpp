@@ -91,13 +91,14 @@ bool TABBCalendario::Insertar(TCalendario &calen){
 }
 
 bool TABBCalendario::Borrar(TCalendario &calen){
-    if(this->Buscar(calen) == false || this->EsVacio() == true){
+    if(this->Buscar(calen) == false){
         return false;
     }
     else{
         if(calen == this->raiz->item){
             if(this->raiz->iz.EsVacio() || this->raiz->de.EsVacio()){  // 0 ó 1 hijo
-                if(this->raiz->de.EsVacio()){    //no tiene hijo derecho, por lo cual analizamos el de la izquierda
+            //no tiene hijo derecho, por lo cual analizamos el de la izquierda
+                if(this->raiz->de.EsVacio()){
                     TNodoABB *nextnodo(this->raiz->iz.raiz);
                     this->raiz = nextnodo; //hacemos que el nodo actual sea el nodo siguiente, eliminando el objetivo
                 }
@@ -123,10 +124,10 @@ bool TABBCalendario::Borrar(TCalendario &calen){
             }
         }
         else if(calen > this->raiz->item){
-            return this->raiz->de.Borrar(calen);
+            return this->raiz->de.Buscar(calen);
         }
         else if(calen < this->raiz->item){
-            return this->raiz->iz.Borrar(calen);
+            return this->raiz->iz.Buscar(calen);
         }
     }
 }
