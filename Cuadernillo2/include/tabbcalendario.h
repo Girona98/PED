@@ -4,6 +4,7 @@
 #include <string.h>
 #include "tcalendario.h"
 #include "tvectorcalendario.h"
+#include <queue>
 using namespace std;
 
 class TNodoABB;
@@ -21,6 +22,8 @@ class TABBCalendario{
         void PostordenAux(TVectorCalendario&, int &)const;
         //auxiliar para realizar la copia de tabbcalendarios
         void Copiar(const TABBCalendario &);
+        //auxiliar para buscar el hijo mayor de la rama izquierda
+        TNodoABB BuscarIzq();
     public:
         //Constructor por defecto
         TABBCalendario();

@@ -56,29 +56,21 @@ TVectorCalendario& TVectorCalendario::operator=(const TVectorCalendario& tvector
 }
 
 
-// bool TVectorCalendario::operator==(TVectorCalendario& tvector){
-//     bool equal = true;
-//     if(this->tamano == tvector.tamano){
-//         for(int i = 0; i < tvector.tamano && equal == true; i++){
-//             if(this->c[i] != tvector.c[i + 1]){
-//                 equal = false;
-//             }
-//         }
-//     }   
-//     return equal;
-// }
-
-bool TVectorCalendario::operator==(TVectorCalendario & tvector){
-    bool igual = true;
-    if(this->tamano != tvector.tamano){ return false;}
-    for (int i = 0; i < this->tamano; i++){
-        for (int j = 0; j < tvector.tamano; j++){
-            if(this->c[i] == tvector.c[i]){ igual = true; }
-            else{igual = false;}
+bool TVectorCalendario::operator==(TVectorCalendario& tvector){
+    bool equal = true;
+    if(this->tamano == tvector.tamano){
+        for(int i = 0; i < tvector.tamano && equal == true; i++){
+            if(this->c[i] != tvector.c[i]){
+                equal = false;
+            }
         }
     }
-    return igual;
+    else{
+        equal = false;
+    }   
+    return equal;
 }
+
 
 bool TVectorCalendario::operator!=(TVectorCalendario& tvector){
     return !(*this==tvector);
