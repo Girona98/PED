@@ -7,7 +7,22 @@
 using namespace std;
 
 class TNodoAVL{
-
+    private:
+        // El elemento (etiqueta) del nodo
+        TCalendario item;
+        // Subárbol izquierdo y derecho
+        TAVLCalendario iz, de;
+        // Factor de equilibrio
+        int fe;
+    public:
+        //Constructor por defecto
+        TNodoAVL ();
+        //Constructor copia
+        TNodoAVL (TNodoAVL &);
+        //Destructor
+        ~TNodoAVL ();
+        // Sobrecarga del operador asignación
+        TNodoAVL & operator=( TNodoAVL &);
 };
 
 class TAVLCalendario{
@@ -21,14 +36,15 @@ class TAVLCalendario{
     // AUXILIAR: devuelve el recorrido en POSTORDEN
         void PostordenAux(TVectorCalendario &, int &);
     // FORMA CANÓNICA 
+    public:
     // Constructor por defecto
         TAVLCalendario ();
         // Constructor de copia
         TAVLCalendario (TAVLCalendario &);
-        // Destructor~TAVLCalendario ();
+        // Destructor
+        ~TAVLCalendario ();
         // Sobrecarga del operador asignación
         TAVLCalendario & operator=( TAVLCalendario &);
-    public:
     // Sobrecarga del operador igualdad
         bool operator==( TAVLCalendario &);
         // Sobrecarga del operador desigualdad
