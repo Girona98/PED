@@ -97,77 +97,138 @@ bool TAVLCalendario::Insertar(TCalendario &calen){
     else if(calen > this->raiz->item){
         insertado = this->raiz->de.Insertar(calen);
     }
-    //hay que meter cosas aqui de equilibrar
-
-    //aaokjdsfñlkasdjfñljasdñlfkjadsñlkfjasñkjfñalskjdfañksjdñf
+    if(insertado == true){
+        this->equilibrar();
+    }
     return insertado;
 }
 
-bool TAVLCalendario::Borrar(TCalendario &calen){
-    // if(this->Buscar(calen) == false || this->EsVacio() == true){
-    //     return false;
-    // }
-    // else{
-    //     if(calen == this->raiz->item){
-    //         if(this->raiz->iz.EsVacio() == true || this->raiz->de.EsVacio() == true){  // 0 ó 1 hijo
-    //         //no tiene hijo derecho, por lo cual analizamos el de la izquierda
-    //             if(this->raiz->de.EsVacio() == true){
-    //                 TNodoAVL *nextnodo(this->raiz->iz.raiz);
-    //                 this->raiz = nextnodo; //hacemos que el nodo actual sea el nodo siguiente, eliminando el objetivo
-    //                 return true;
-    //             }
-    //             else{
-    //                 //no tiene hijo izquierdo ,por lo cual analizamos el de la derecha
-    //                 if(this->raiz->iz.EsVacio() == true){
-    //                     TNodoAVL *nextnodo(this->raiz->de.raiz);
-    //                     this->raiz = nextnodo;
-    //                     return true;
-    //                 }
-    //                 else{
-    //                     this->raiz = NULL; //la raiz no tiene ningun hijo
-    //                     return true;
-    //                 }
-    //             }
-    //         }
-    //         else{   // 2 hijos
-    //             TNodoAVL *nodoabb = new TNodoAVL(this->raiz->iz.BuscarIzq());
-    //             //guardamos el objeto this en nodoabb
-    //             nodoabb->iz = this->raiz->iz;
-    //             nodoabb->de = this->raiz->de;
-    //             this->raiz = nodoabb;
-    //             nodoabb = NULL;
-    //             return true;
-    //         }
-    //     }
-    //     else if(calen > this->raiz->item){
-    //         return this->raiz->de.Borrar(calen);
-    //     }
-    //     else if(calen < this->raiz->item){
-    //         return this->raiz->iz.Borrar(calen);
-    //     }
-    //     else{
-    //         return false;
-    //     }
-    // }
+void TAVLCalendario::equilibrar(){
+    int fe = this->raiz->fe;
+
+    if(fe > 1){  //rotación derecha
+        TNodoAVL *tnodo;
+        if(this->raiz->de.raiz->fe >= 0){
+           tnodo = this->raiz->de.raiz;
+           this->raiz->de.raiz = this->raiz->de.raiz->iz.raiz;
+           this->raiz = tnodo; 
+        }
+        else{
+            tnodo = this->raiz->de.raiz;
+            this->raiz->de.raiz = this->raiz->iz.raiz->iz.raiz;
+            tnodo->iz.raiz->iz.raiz = this->raiz;
+            this->raiz = tnodo->iz.raiz;
+            tnodo->iz.raiz = this->raiz->de.raiz;
+            this->raiz->de.raiz = tnodo; 
+        }
+        this->raiz->fe = this->calcFE();
+        this->updateFE();
+    }
+    else if(fe < -1){
+        TNodoAVL *tnodo;
+        if(this->raiz->de.raiz->fe <= 0){
+           tnodo = this->raiz->iz.raiz;
+           this->raiz->iz.raiz = this->raiz->iz.raiz->de.raiz;
+           this->raiz = tnodo; 
+        }
+        else{
+            tnodo = this->raiz->iz.raiz;
+            this->raiz->iz.raiz = this->raiz->de.raiz->de.raiz;
+            tnodo->de.raiz->de.raiz = this->raiz;
+            this->raiz = tnodo->de.raiz;
+            tnodo->de.raiz = this->raiz->iz.raiz;
+            this->raiz->iz.raiz = tnodo; 
+        }
+        this->raiz->fe = this->calcFE();
+        this->updateFE();
+    }
 }
 
-// TNodoAVL TAVLCalendario::BuscarIzq(){
-//     if(this->EsVacio() == true){
-//         TNodoAVL *tnodo = new TNodoAVL();
-//         return *tnodo;
-//     }
-//     else if(this->raiz->de.EsVacio() == true){
-//         TNodoAVL *tnodo = new TNodoAVL();
-//         tnodo = this->raiz;
-//         TCalendario delCalen = tnodo->item;
-//         this->Borrar(delCalen);
-//         return *tnodo;
-//     }
-//     else{
-//         TNodoAVL *tnodo = new TNodoAVL(this->raiz->de.BuscarIzq());
-//         return *tnodo;
-//     }
-// }
+int TAVLCalendario::calcFE(){
+    return (this->raiz->de.Altura() - this->raiz->iz.Altura());
+}
+
+void TAVLCalendario::updateFE(){
+    if (this->raiz->iz.raiz != NULL){
+        this->raiz->iz.raiz->fe = this->calcFE();
+    }
+    if(this->raiz->de.raiz != NULL){
+        this->raiz->de.raiz->fe = this->calcFE();
+    }
+}
+
+bool TAVLCalendario::Borrar(TCalendario &calen){
+    bool eliminado = false;
+    if(this->Buscar(calen) == false || this->EsVacio() == true){
+        eliminado = false;
+        return eliminado;
+    }
+    else{
+        if(calen == this->raiz->item){
+            if(this->raiz->iz.EsVacio() == true || this->raiz->de.EsVacio() == true){  // 0 ó 1 hijo
+            //no tiene hijo derecho, por lo cual analizamos el de la izquierda
+                if(this->raiz->de.EsVacio() == true){
+                    TNodoAVL *nextnodo(this->raiz->iz.raiz);
+                    this->raiz = nextnodo; //hacemos que el nodo actual sea el nodo siguiente, eliminando el objetivo
+                    eliminado = true;
+                }
+                else{
+                    //no tiene hijo izquierdo ,por lo cual analizamos el de la derecha
+                    if(this->raiz->iz.EsVacio() == true){
+                        TNodoAVL *nextnodo(this->raiz->de.raiz);
+                        this->raiz = nextnodo;
+                        eliminado = true;
+                    }
+                    else{
+                        this->raiz = NULL; //la raiz no tiene ningun hijo
+                        eliminado = true;
+                    }
+                }
+            }
+            else{   // 2 hijos
+                TNodoAVL *nodoavl = new TNodoAVL(this->raiz->iz.BuscarIzq());
+                //guardamos el objeto this en nodoavl
+                nodoavl->iz = this->raiz->iz;
+                nodoavl->de = this->raiz->de;
+                this->raiz = nodoavl;
+                nodoavl = NULL;
+                eliminado = true;
+            }
+        }
+        else if(calen > this->raiz->item){
+            eliminado = this->raiz->de.Borrar(calen);
+        }
+        else if(calen < this->raiz->item){
+            eliminado = this->raiz->iz.Borrar(calen);
+        }
+        else{
+            eliminado = false;
+        }
+    }
+
+    if(this->raiz != NULL){
+        this->equilibrar();
+    }
+    return eliminado;
+}
+
+TNodoAVL TAVLCalendario::BuscarIzq(){
+    if(this->EsVacio() == true){
+        TNodoAVL *tnodo = new TNodoAVL();
+        return *tnodo;
+    }
+    else if(this->raiz->de.EsVacio() == true){
+        TNodoAVL *tnodo = new TNodoAVL();
+        tnodo = this->raiz;
+        TCalendario delCalen = tnodo->item;
+        this->Borrar(delCalen);
+        return *tnodo;
+    }
+    else{
+        TNodoAVL *tnodo = new TNodoAVL(this->raiz->de.BuscarIzq());
+        return *tnodo;
+    }
+}
 
 bool TAVLCalendario::Buscar(const TCalendario &calen)const{
     if (this->EsVacio() == true){

@@ -25,6 +25,11 @@ class TAVLCalendario{
         void PreordenAux(TVectorCalendario&, int&) const;
         void PostordenAux(TVectorCalendario&, int&) const;
         void InordenAux(TVectorCalendario&, int&) const;
+        TNodoAVL BuscarIzq();
+        void equilibrar();
+        int calcFE();
+        void updateFE();
+        
     public:
         // Constructor por defecto
         TAVLCalendario ();
