@@ -18,7 +18,7 @@ class TVectorCalendario{
         TVectorCalendario(const TVectorCalendario&);              //constructor de copia
         ~TVectorCalendario();                               //destructor
         TVectorCalendario& operator=(const TVectorCalendario&);   //sobrecarga del operador asignacion
-        bool operator==(TVectorCalendario&);                //sobrecarga del operador igualdad
+        bool operator==(const TVectorCalendario&);                //sobrecarga del operador igualdad
         bool operator!=(TVectorCalendario&);                //sobrecarga del operador desigualdad
         TCalendario& operator[](int);                       //sobrecarga del operador corchete(parte izquierda)
         TCalendario operator[](int) const;                  //sobrecarga del operador corchete (parte derecha)

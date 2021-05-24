@@ -56,7 +56,7 @@ TVectorCalendario& TVectorCalendario::operator=(const TVectorCalendario& tvector
 }
 
 
-bool TVectorCalendario::operator==(TVectorCalendario& tvector){
+bool TVectorCalendario::operator==(const TVectorCalendario& tvector){
     bool equal = true;
     if(this->tamano == tvector.tamano){
         for(int i = 0; i < tvector.tamano && equal == true; i++){

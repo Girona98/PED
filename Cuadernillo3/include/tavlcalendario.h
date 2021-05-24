@@ -13,15 +13,7 @@ class TAVLCalendario{
     private:
         // Puntero al nodo raíz
         TNodoAVL *raiz;
-        // AUXILIAR:devuelve el recorrido en INORDEN
-        void InordenAux(TVectorCalendario &, int &);
-        // AUXILIAR: devuelve el recorrido en PREORDEN
-        void PreordenAux(TVectorCalendario &, int &);
-        // AUXILIAR: devuelve el recorrido en POSTORDEN
-        void PostordenAux(TVectorCalendario &, int &);
-
         void Copiar(const TAVLCalendario&);
-
         void PreordenAux(TVectorCalendario&, int&) const;
         void PostordenAux(TVectorCalendario&, int&) const;
         void InordenAux(TVectorCalendario&, int&) const;
@@ -29,7 +21,6 @@ class TAVLCalendario{
         void equilibrar();
         int calcFE();
         void updateFE();
-        
     public:
         // Constructor por defecto
         TAVLCalendario ();
@@ -40,13 +31,13 @@ class TAVLCalendario{
         // Sobrecarga del operador asignación
         TAVLCalendario & operator=(const TAVLCalendario &);
         // Sobrecarga del operador igualdad
-        bool operator==( TAVLCalendario &)const ;
+        bool operator==( const TAVLCalendario &)const ;
         // Sobrecarga del operador desigualdad
         bool operator!=( TAVLCalendario &) const;
         // Devuelve TRUE si el árbol está vacío, FALSE en caso contrario
         bool EsVacio() const;
         // Inserta el elementoen el árbol
-        bool Insertar(TCalendario &);
+        bool Insertar(const TCalendario &);
         // Devuelve TRUE si el elemento está en el árbol, false en caso contrario
         bool Buscar(const TCalendario &) const;
         // Devuelve la altura del árbol (la altura de un árbol vacío es 0)

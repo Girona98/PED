@@ -61,7 +61,7 @@ TAVLCalendario& TAVLCalendario::operator=(const TAVLCalendario &tavl){
     }
 }
 
-bool TAVLCalendario::operator==(TAVLCalendario &tavl) const{
+bool TAVLCalendario::operator==(const TAVLCalendario &tavl) const{
     TVectorCalendario arbol1, arbol2;
     arbol1 = this->Inorden();
     arbol2 = tavl.Inorden();
@@ -69,7 +69,7 @@ bool TAVLCalendario::operator==(TAVLCalendario &tavl) const{
 }
 
 bool TAVLCalendario::operator!=(TAVLCalendario &tavl) const{
-        return !(this==&tavl);
+        return !(*this == tavl);
 }
 
 bool TAVLCalendario::EsVacio() const{
@@ -81,7 +81,7 @@ bool TAVLCalendario::EsVacio() const{
     }
 }
 
-bool TAVLCalendario::Insertar(TCalendario &calen){
+bool TAVLCalendario::Insertar(const TCalendario &calen){
     bool insertado = false;
     if (this->Buscar(calen) == true){
         insertado = false;
@@ -104,18 +104,20 @@ bool TAVLCalendario::Insertar(TCalendario &calen){
 }
 
 void TAVLCalendario::equilibrar(){
+    this->raiz->fe = this->calcFE();
     int fe = this->raiz->fe;
-
+    
     if(fe > 1){  //rotación derecha
         TNodoAVL *tnodo;
         if(this->raiz->de.raiz->fe >= 0){
            tnodo = this->raiz->de.raiz;
            this->raiz->de.raiz = this->raiz->de.raiz->iz.raiz;
+           tnodo->iz.raiz = this->raiz;
            this->raiz = tnodo; 
         }
         else{
             tnodo = this->raiz->de.raiz;
-            this->raiz->de.raiz = this->raiz->iz.raiz->iz.raiz;
+            this->raiz->de.raiz = tnodo->iz.raiz->iz.raiz;
             tnodo->iz.raiz->iz.raiz = this->raiz;
             this->raiz = tnodo->iz.raiz;
             tnodo->iz.raiz = this->raiz->de.raiz;
@@ -124,16 +126,17 @@ void TAVLCalendario::equilibrar(){
         this->raiz->fe = this->calcFE();
         this->updateFE();
     }
-    else if(fe < -1){
+    else if(fe < -1){  //rotacion izquierda
         TNodoAVL *tnodo;
-        if(this->raiz->de.raiz->fe <= 0){
+        if(this->raiz->iz.raiz->fe <= 0){
            tnodo = this->raiz->iz.raiz;
            this->raiz->iz.raiz = this->raiz->iz.raiz->de.raiz;
+           tnodo->de.raiz = this->raiz;
            this->raiz = tnodo; 
         }
         else{
             tnodo = this->raiz->iz.raiz;
-            this->raiz->iz.raiz = this->raiz->de.raiz->de.raiz;
+            this->raiz->iz.raiz = tnodo->de.raiz->de.raiz;
             tnodo->de.raiz->de.raiz = this->raiz;
             this->raiz = tnodo->de.raiz;
             tnodo->de.raiz = this->raiz->iz.raiz;
@@ -145,7 +148,9 @@ void TAVLCalendario::equilibrar(){
 }
 
 int TAVLCalendario::calcFE(){
-    return (this->raiz->de.Altura() - this->raiz->iz.Altura());
+    int de = this->raiz->de.Altura();
+    int izq = this->raiz->iz.Altura();
+    return (de - izq);
 }
 
 void TAVLCalendario::updateFE(){
